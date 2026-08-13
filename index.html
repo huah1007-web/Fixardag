@@ -1,36 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FixDay</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+}
+
+header{
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+padding:50px;
+text-align:center;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+.dashboard{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+margin-bottom:25px;
+}
+
+.stat{
+background:#111827;
+padding:20px;
+border-radius:16px;
+text-align:center;
+}
+
+.form{
+background:#111827;
+padding:20px;
+border-radius:16px;
+margin-bottom:20px;
+}
+
+input,textarea{
+width:100%;
+padding:12px;
+margin-bottom:10px;
+background:#1f2937;
+color:white;
+border:none;
+border-radius:10px;
+}
+
+button{
+background:#3b82f6;
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:10px;
+cursor:pointer;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+gap:20px;
+}
+
+.card{
+background:#111827;
+border-radius:20px;
+overflow:hidden;
+}
+
+.card img{
+width:100%;
+height:240px;
+object-fit:cover;
+}
+
+.content{
+padding:20px;
+}
+
+.people{
+margin-top:10px;
+}
+
+.person{
+background:#1f2937;
+padding:10px;
+border-radius:10px;
+margin-top:8px;
+display:flex;
+justify-content:space-between;
+}
+
+.green{
+color:#22c55e;
+font-weight:bold;
+}
+
+@media(max-width:768px){
+header{
+padding:30px;
+}
+}
+</style>
+</head>
+
 <body>
 
-<script>
-const PASSWORD = "A2026";
-
-const enteredPassword = prompt("🔒 Indtast password for at åbne FIXDAY");
-
-if (enteredPassword !== PASSWORD) {
-
-    document.body.innerHTML = `
-        <div style="
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            height:100vh;
-            background:#0f172a;
-            color:white;
-            font-family:'Segoe UI',sans-serif;
-            text-align:center;
-            padding:20px;
-        ">
-            <div>
-                <h1>❌ Adgang nægtet</h1>
-                <p>Forkert password.</p>
-            </div>
-        </div>
-    `;
-
-    throw new Error("Access denied");
-}
-</script>
-
 <header>
-    <h1>🔧 FIXDAY</h1>
-    <p>Work together. Get things done.</p>
+<h1>🔧 FIXDAY</h1>
+<p>Work together. Get things done.</p>
 </header>
+
+<div class="container">
+
+<div class="dashboard">
+
+<div class="stat">
+<h2 id="taskCount">0</h2>
+<p>Tasks</p>
+</div>
+
+<div class="stat">
+<h2 id="participantCount">0</h2>
+<p>Participants</p>
+</div>
+
+</div>
+
+<div class="form">
+
+<h2>Create Task</h2>
+
+<input id="title" placeholder="Task Name">
+
+<textarea id="description"
+placeholder="Description"></textarea>
+
+<input id="maxPeople"
+type="number"
+value="4">
+
+<input id="images"
+type="file"
+multiple
+accept="image/*">
+
+<button onclick="createTask()">
+Create Task
+</button>
+
+</div>
+
+<div id="tasks" class="grid"></div>
+
+</div>
+
+<script>
+
+let tasks =
+JSON.parse(
+localStorage.getItem("fixday")
+)||[];
+
+function save(){
+localStorage.setItem(
+"fixday",
+JSON.stringify(tasks)
+);
+}
+
+function createTask(){
+
+const title=
+document.getElementById("title").value;
+
+if(!title){
+alert("Task name required");
+return;
+}
+
+const files=
+document.getElementById("images").files;
+
+const task={
+title:title,
+description:
+document.getElementById("description").value,
+max:
+parseInt(
+document.getElementById("maxPeople").value
+),
+images:[],
+people:[]
+};
+
+if(files.length===0){
+
+tasks.push(task);
+save();
+render();
+return;
+
+}
+
+let loaded=0;
+
+for(let file of files){
+
+const reader=new FileReader();
+
+reader.onload=function(e){
+
+task.images.push(e.target.result);
+
+loaded++;
+
+if(
