@@ -4,531 +4,559 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fixardag</title>
- 
+
 <style>
- 
+:root{
+--primary:#0078d4;
+--success:#16a34a;
+--warning:#f59e0b;
+--danger:#dc2626;
+--bg:#eef4fb;
+--card:#ffffff;
+}
+
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
 }
- 
+
 body{
-font-family:'Segoe UI',sans-serif;
-background:#eef3f8;
+font-family:Segoe UI,Arial,sans-serif;
+background:var(--bg);
 color:#333;
 }
- 
+
 header{
-background:linear-gradient(135deg,#0078d4,#004e8c);
+background:linear-gradient(135deg,#0078d4,#0050a0);
 color:white;
 padding:40px;
 text-align:center;
+box-shadow:0 3px 10px rgba(0,0,0,.15);
 }
- 
+
 header h1{
-font-size:3rem;
-margin-bottom:10px;
+font-size:48px;
 }
- 
+
 .container{
 max-width:1400px;
 margin:auto;
 padding:20px;
 }
- 
-.dashboard{
+
+.stats{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
 gap:15px;
 margin-bottom:20px;
 }
- 
+
 .stat{
 background:white;
 padding:20px;
-border-radius:15px;
 text-align:center;
-box-shadow:0 4px 12px rgba(0,0,0,0.08);
+border-radius:18px;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
 }
- 
-.create-box{
+
+.form-card{
 background:white;
-padding:25px;
+padding:20px;
 border-radius:20px;
-box-shadow:0 4px 12px rgba(0,0,0,0.08);
 margin-bottom:20px;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
 }
- 
-.create-box h2{
-margin-bottom:15px;
-}
- 
+
 input,textarea{
 width:100%;
 padding:12px;
-margin-bottom:12px;
-border:1px solid #ccc;
-border-radius:10px;
+border:1px solid #ddd;
+border-radius:12px;
+margin-bottom:10px;
 font-size:15px;
 }
- 
-textarea{
-min-height:100px;
-resize:vertical;
-}
- 
+
 button{
-background:#0078d4;
-color:white;
 border:none;
-padding:12px 18px;
+padding:10px 15px;
 border-radius:10px;
 cursor:pointer;
 font-weight:600;
 }
- 
-button:hover{
-background:#005ea6;
+
+.primary{
+background:var(--primary);
+color:white;
 }
- 
+
+.success{
+background:var(--success);
+color:white;
+}
+
+.warning{
+background:var(--warning);
+color:white;
+}
+
+.danger{
+background:var(--danger);
+color:white;
+}
+
 .search{
 margin-bottom:20px;
 }
- 
-.preview{
-max-width:400px;
-max-height:220px;
-border-radius:10px;
-display:none;
-margin-bottom:15px;
-}
- 
-.tasks{
+
+.grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
 gap:20px;
 }
- 
+
 .card{
 background:white;
 border-radius:20px;
 overflow:hidden;
-box-shadow:0 8px 20px rgba(0,0,0,.12);
-transition:0.3s;
+box-shadow:0 10px 25px rgba(0,0,0,.10);
+transition:.3s;
 }
- 
+
 .card:hover{
-transform:translateY(-5px);
+transform:translateY(-4px);
 }
- 
-.card img{
-width:100%;
-height:250px;
-object-fit:cover;
-display:block;
+
+.gallery{
+display:flex;
+overflow-x:auto;
+gap:5px;
 background:#ddd;
 }
- 
+
+.gallery img{
+height:220px;
+width:100%;
+object-fit:cover;
+flex:0 0 100%;
+}
+
 .content{
-padding:18px;
+padding:20px;
 }
- 
-.content h3{
-margin-bottom:10px;
-}
- 
+
 .badge{
 display:inline-block;
 padding:8px 12px;
-border-radius:20px;
+border-radius:30px;
 color:white;
-font-size:13px;
 font-weight:bold;
 margin-bottom:10px;
 }
- 
-.green{
-background:#16a34a;
-}
- 
-.yellow{
-background:#f59e0b;
-}
- 
-.red{
-background:#dc2626;
-}
- 
+
+.green{background:var(--success);}
+.yellow{background:var(--warning);}
+.red{background:var(--danger);}
+
 .progress{
 height:12px;
 background:#ddd;
-border-radius:10px;
+border-radius:50px;
 overflow:hidden;
 margin:10px 0;
 }
- 
-.progress-bar{
+
+.bar{
 height:100%;
-background:#16a34a;
+background:var(--success);
 }
- 
+
 .person{
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:#f8fafc;
 padding:10px;
-border-radius:10px;
 margin-top:8px;
+background:#f7f7f7;
+border-radius:10px;
 }
- 
-.doneBtn{
-background:#16a34a;
-padding:8px 12px;
+
+.actions{
+display:flex;
+gap:10px;
+margin-top:15px;
+flex-wrap:wrap;
 }
- 
-.member{
-font-weight:500;
-}
- 
 </style>
 </head>
 <body>
- 
+
 <header>
-<h1>🔧 Fixardag</h1>
+<h1>🔧 FIXARDAG</h1>
 <p>Sammen gør vi arbejdspladsen bedre</p>
 </header>
- 
+
 <div class="container">
- 
-<div class="dashboard">
- 
+
+<div class="stats">
 <div class="stat">
 <h2 id="taskCount">0</h2>
 <p>Opgaver</p>
 </div>
- 
+
 <div class="stat">
 <h2 id="participantCount">0</h2>
 <p>Deltagere</p>
 </div>
- 
+
+<div class="stat">
+<h2 id="freeCount">0</h2>
+<p>Ledige pladser</p>
 </div>
- 
-<div class="create-box">
- 
+</div>
+
+<div class="form-card">
+
 <h2>➕ Opret opgave</h2>
- 
+
 <input id="title" placeholder="Opgavenavn">
- 
+
 <textarea id="description"
 placeholder="Beskrivelse"></textarea>
- 
+
 <input id="maxPeople"
 type="number"
 value="4"
 min="1">
- 
+
+<label><b>Upload billeder</b></label>
+
 <input
+id="images"
 type="file"
-id="imageInput"
-accept="image/*">
- 
-<img id="previewImage" class="preview">
- 
-<button onclick="createTask()">
+accept="image/*"
+multiple>
+
+<button class="primary"
+onclick="createTask()">
 Tilføj opgave
 </button>
- 
+
 </div>
- 
+
 <input
 id="search"
 class="search"
 placeholder="🔍 Søg opgave..."
-onkeyup="renderTasks()">
- 
-<div id="tasks" class="tasks"></div>
- 
+onkeyup="render()">
+
+<div id="tasks" class="grid"></div>
+
 </div>
- 
+
 <script>
- 
+
 let tasks =
-JSON.parse(localStorage.getItem("fixardag")) || [];
- 
-let currentImage = "";
- 
-const imageInput =
-document.getElementById("imageInput");
- 
-const previewImage =
-document.getElementById("previewImage");
- 
-imageInput.addEventListener("change", function(){
- 
-const file = this.files[0];
- 
-if(!file) return;
- 
-const reader = new FileReader();
- 
-reader.onload = function(e){
- 
-currentImage = e.target.result;
- 
-previewImage.src = currentImage;
- 
-previewImage.style.display = "block";
- 
-};
- 
-reader.readAsDataURL(file);
- 
-});
- 
+JSON.parse(
+localStorage.getItem("fixardag")
+) || [];
+
 function save(){
- 
 localStorage.setItem(
 "fixardag",
 JSON.stringify(tasks)
 );
- 
 }
- 
+
 function createTask(){
- 
+
 const title =
-document.getElementById("title").value.trim();
- 
+document.getElementById("title").value;
+
 const description =
-document.getElementById("description").value.trim();
- 
-const maxPeople =
-parseInt(document.getElementById("maxPeople").value);
- 
+document.getElementById("description").value;
+
+const max =
+parseInt(
+document.getElementById("maxPeople").value
+);
+
 if(!title){
- 
-alert("Indtast et opgavenavn");
- 
+alert("Indtast opgavenavn");
 return;
- 
 }
- 
+
+const files =
+document.getElementById("images").files;
+
+const images=[];
+
+if(files.length===0){
+
 tasks.push({
- 
-title:title,
- 
-description:description,
- 
-max:maxPeople,
- 
-image:currentImage,
- 
+title,
+description,
+max,
+images:[],
 people:[]
- 
 });
- 
+
 save();
- 
-document.getElementById("title").value = "";
-document.getElementById("description").value = "";
-document.getElementById("maxPeople").value = 4;
-document.getElementById("imageInput").value = "";
- 
-previewImage.style.display = "none";
- 
-currentImage = "";
- 
-renderTasks();
- 
+render();
+
+return;
 }
- 
+
+let loaded=0;
+
+for(let i=0;i<files.length;i++){
+
+const reader=
+new FileReader();
+
+reader.onload=(e)=>{
+
+images.push(e.target.result);
+
+loaded++;
+
+if(loaded===files.length){
+
+tasks.push({
+title,
+description,
+max,
+images,
+people:[]
+});
+
+save();
+render();
+
+}
+};
+
+reader.readAsDataURL(files[i]);
+}
+
+}
+
 function joinTask(index){
- 
-const name =
+
+const name=
 prompt("Skriv dit navn");
- 
+
 if(!name) return;
- 
-const task = tasks[index];
- 
-if(task.people.length >= task.max){
- 
+
+const task=tasks[index];
+
+if(task.people.length>=task.max){
 alert("Ingen ledige pladser");
- 
 return;
- 
 }
- 
+
 if(task.people.some(
-p => p.name.toLowerCase() === name.toLowerCase()
+p=>p.name.toLowerCase()
+===name.toLowerCase()
 )){
- 
 alert("Du er allerede tilmeldt");
- 
 return;
- 
 }
- 
+
 task.people.push({
 name:name,
 done:false
 });
- 
+
 save();
- 
-renderTasks();
- 
+render();
+
 }
- 
-function markDone(taskIndex,personIndex){
- 
-tasks[taskIndex]
-.people[personIndex]
-.done = true;
- 
+
+function doneTask(t,p){
+
+tasks[t].people[p].done=true;
+
 save();
- 
-renderTasks();
- 
+render();
+
 }
- 
-function renderTasks(){
- 
-let totalParticipants = 0;
- 
-const search =
+
+function deleteTask(index){
+
+if(confirm("Slet opgaven?")){
+
+tasks.splice(index,1);
+
+save();
+render();
+
+}
+
+}
+
+function editTask(index){
+
+const newTitle=
+prompt(
+"Ret opgavenavn",
+tasks[index].title
+);
+
+if(newTitle){
+
+tasks[index].title=newTitle;
+
+save();
+render();
+
+}
+
+}
+
+function render(){
+
+const search=
 document.getElementById("search")
-.value
-.toLowerCase();
- 
-let html = "";
- 
+.value.toLowerCase();
+
+let html="";
+
+let participants=0;
+let totalFree=0;
+
 tasks.forEach((task,index)=>{
- 
+
 if(
-!task.title.toLowerCase().includes(search)
+!task.title
+.toLowerCase()
+.includes(search)
 ){
 return;
 }
- 
-totalParticipants += task.people.length;
- 
-const free =
-task.max - task.people.length;
- 
-const used =
-task.people.length;
- 
-const percent =
-(used/task.max)*100;
- 
-let color = "green";
-let text = `${free} ledige pladser`;
- 
-if(free === 0){
- 
-color = "red";
-text = "Fuldt booket";
- 
+
+participants+=task.people.length;
+
+const free=
+task.max-task.people.length;
+
+totalFree+=free;
+
+let badgeClass="green";
+let badgeText=`${free} ledige pladser`;
+
+if(free===0){
+badgeClass="red";
+badgeText="Fuldt booket";
 }
-else if(free <=2){
- 
-color = "yellow";
-text = `${free} pladser tilbage`;
- 
+else if(free<=2){
+badgeClass="yellow";
+badgeText=`${free} pladser tilbage`;
 }
- 
-html += `
- 
+
+const percent=
+(task.people.length/task.max)*100;
+
+html+=`
+
 <div class="card">
- 
-${
-task.image
-?
-`${task.image}`
-:
-`https://picsum.photos/700/450?random=${index}`
+
+<div class="gallery">
+
+${task.images.length
+? task.images.map(img =>
+`${img}`
+).join("")
+: `https://picsum.photos/800/400?random=${index}`
 }
- 
-<div class="content">
- 
-<div class="badge ${color}">
-${text}
+
 </div>
- 
-<h3>${task.title}</h3>
- 
+
+<div class="content">
+
+<div class="badge ${badgeClass}">
+${badgeText}
+</div>
+
+<h2>${task.title}</h2>
+
 <p>${task.description}</p>
- 
+
 <br>
- 
-<strong>👥 ${used}/${task.max}</strong>
- 
+
+<strong>
+👥 ${task.people.length}/${task.max}
+</strong>
+
 <div class="progress">
-<div
-class="progress-bar"
+<div class="bar"
 style="width:${percent}%">
 </div>
 </div>
- 
-<button onclick="joinTask(${index})">
+
+<div class="actions">
+
+<button
+class="primary"
+onclick="joinTask(${index})">
 Jeg kommer
 </button>
- 
-<br><br>
- 
-${task.people.map((person,pIndex)=>`
- 
+
+<button
+class="warning"
+onclick="editTask(${index})">
+✏️ Rediger
+</button>
+
+<button
+class="danger"
+onclick="deleteTask(${index})">
+🗑️ Slet
+</button>
+
+</div>
+
+<br>
+
+${task.people.map((person,p)=>`
+
 <div class="person">
- 
-<div class="member">
+
+<span>
 ${person.done ? "✅" : "⏳"}
 ${person.name}
-</div>
- 
-<div>
- 
-${
-!person.done
-?
-`<button class="doneBtn"
-onclick="markDone(${index},${pIndex})">
+</span>
+
+${person.done ?
+"" :
+`<button
+class="success"
+onclick="doneTask(${index},${p})">
 Udført
 </button>`
-:
-""
 }
- 
+
 </div>
- 
-</div>
- 
+
 `).join("")}
- 
+
 </div>
- 
+
 </div>
- 
+
 `;
- 
+
 });
- 
-document.getElementById("tasks").innerHTML = html;
- 
-document.getElementById("taskCount").innerText = tasks.length;
- 
-document.getElementById("participantCount").innerText =
-totalParticipants;
- 
+
+document.getElementById("tasks").innerHTML=html;
+document.getElementById("taskCount").innerText=tasks.length;
+document.getElementById("participantCount").innerText=participants;
+document.getElementById("freeCount").innerText=totalFree;
+
 }
- 
-renderTasks();
- 
+
+render();
 </script>
- 
+
 </body>
 </html>
