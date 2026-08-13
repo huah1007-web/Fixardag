@@ -289,18 +289,13 @@ button:disabled {
     font-size: 14px;
 }
 
-.empty {
+.empty,
+.loader {
     text-align: center;
     color: #94a3b8;
     padding: 40px;
     background: #111827;
     border-radius: 18px;
-}
-
-.loader {
-    text-align: center;
-    color: #cbd5e1;
-    padding: 30px;
 }
 
 .small-text {
@@ -422,11 +417,31 @@ button:disabled {
 
 </div>
 
-https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.jsscript>
-https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.jsscript>
-https://www.gstatic.com/firebasejs/10.12.5/firebase-storage-compat.jsscript>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
-<script>
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    doc,
+    updateDoc,
+    deleteDoc,
+    onSnapshot,
+    serverTimestamp,
+    runTransaction,
+    query,
+    orderBy
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    deleteObject
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
+
 const firebaseConfig = {
     apiKey: "AIzaSyDeKIZcW1Mvi4lYvaKRMOWdKk3ikFXwEAU",
     authDomain: "huah-198fc.firebaseapp.com",
@@ -439,10 +454,9 @@ const firebaseConfig = {
 
 const PASSWORD = "A2026";
 
-firebase.initializeApp(firebaseConfig);
-
-const db = firebase.firestore();
-const storage = firebase.storage();
+const firebaseApp = initializeApp(firebaseConfig);
+const db = getFirestore(firebaseApp);
+const storage = getStorage(firebaseApp);
 
 let allTasks = [];
 let appStarted = false;
@@ -502,24 +516,28 @@ function startApp() {
     if (appStarted) return;
 
     appStarted = true;
-
     createTaskBtn.addEventListener("click", createTask);
 
-    db.collection("tasks")
-        .orderBy("createdAt", "desc")
-        .onSnapshot(function(snapshot) {
-            allTasks = [];
+    const tasksQuery = query(
+        collection(db, "tasks"),
+        orderBy("createdAt", "desc")
+    );
 
-            snapshot.forEach(function(documentItem) {
-                allTasks.push({
+    onSnapshot(
+        tasksQuery,
+        function(snapshot) {
+            allTasks = snapshot.docs.map(function(documentItem) {
+                return {
                     id: documentItem.id,
                     ...documentItem.data()
-                });
+                };
             });
 
             renderTasks();
-        }, function(error) {
+        },
+        function(error) {
             console.error(error);
+
             taskList.innerHTML = `
                 <div class="empty">
                     Kunne ikke hente opgaver fra Firebase.
@@ -527,7 +545,8 @@ function startApp() {
                     Tjek Firestore Rules i Firebase Console.
                 </div>
             `;
-        });
+        }
+    );
 }
 
 async function createTask() {
@@ -566,23 +585,23 @@ async function createTask() {
             const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
             imagePath = "task-images/" + Date.now() + "-" + safeFileName + ".jpg";
 
-            const imageRef = storage.ref(imagePath);
+            const imageRef = ref(storage, imagePath);
 
-            await imageRef.put(imageBlob, {
+            await uploadBytes(imageRef, imageBlob, {
                 contentType: "image/jpeg"
             });
 
-            imageUrl = await imageRef.getDownloadURL();
+            imageUrl = await getDownloadURL(imageRef);
         }
 
-        await db.collection("tasks").add({
+        await addDoc(collection(db, "tasks"), {
             name: name,
             description: description,
             max: max,
             imageUrl: imageUrl,
             imagePath: imagePath,
             people: [],
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            createdAt: serverTimestamp()
         });
 
         taskName.value = "";
@@ -628,14 +647,18 @@ function compressImage(file, maxWidth, quality) {
                 const ctx = canvas.getContext("2d");
                 ctx.drawImage(img, 0, 0, width, height);
 
-                canvas.toBlob(function(blob) {
-                    if (!blob) {
-                        reject(new Error("Kunne ikke lave billede"));
-                        return;
-                    }
+                canvas.toBlob(
+                    function(blob) {
+                        if (!blob) {
+                            reject(new Error("Kunne ikke lave billede"));
+                            return;
+                        }
 
-                    resolve(blob);
-                }, "image/jpeg", quality);
+                        resolve(blob);
+                    },
+                    "image/jpeg",
+                    quality
+                );
             };
 
             img.onerror = reject;
@@ -834,12 +857,12 @@ async function joinTask(taskId) {
     }
 
     try {
-        const taskRef = db.collection("tasks").doc(taskId);
+        const taskRef = doc(db, "tasks", taskId);
 
-        await db.runTransaction(async function(transaction) {
+        await runTransaction(db, async function(transaction) {
             const taskSnap = await transaction.get(taskRef);
 
-            if (!taskSnap.exists) {
+            if (!taskSnap.exists()) {
                 throw new Error("Opgaven findes ikke længere");
             }
 
@@ -906,7 +929,7 @@ async function editTask(taskId) {
     }
 
     try {
-        await db.collection("tasks").doc(taskId).update({
+        await updateDoc(doc(db, "tasks", taskId), {
             name: newName.trim() || task.name,
             description: newDescription.trim(),
             max: newMax
@@ -938,22 +961,22 @@ async function changeTaskImage(taskId, file) {
         const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
         const newImagePath = "task-images/" + Date.now() + "-" + safeFileName + ".jpg";
 
-        const imageRef = storage.ref(newImagePath);
+        const imageRef = ref(storage, newImagePath);
 
-        await imageRef.put(imageBlob, {
+        await uploadBytes(imageRef, imageBlob, {
             contentType: "image/jpeg"
         });
 
-        const newImageUrl = await imageRef.getDownloadURL();
+        const newImageUrl = await getDownloadURL(imageRef);
 
-        await db.collection("tasks").doc(taskId).update({
+        await updateDoc(doc(db, "tasks", taskId), {
             imageUrl: newImageUrl,
             imagePath: newImagePath
         });
 
         if (task.imagePath) {
             try {
-                await storage.ref(task.imagePath).delete();
+                await deleteObject(ref(storage, task.imagePath));
             } catch (error) {
                 console.warn("Gammelt billede kunne ikke slettes.", error);
             }
@@ -979,11 +1002,11 @@ async function deleteTask(taskId) {
     if (!yes) return;
 
     try {
-        await db.collection("tasks").doc(taskId).delete();
+        await deleteDoc(doc(db, "tasks", taskId));
 
         if (task.imagePath) {
             try {
-                await storage.ref(task.imagePath).delete();
+                await deleteObject(ref(storage, task.imagePath));
             } catch (imageError) {
                 console.warn("Opgaven blev slettet, men billedet kunne ikke slettes.", imageError);
             }
@@ -1009,7 +1032,7 @@ async function completePerson(taskId, personIndex) {
     people[personIndex].done = true;
 
     try {
-        await db.collection("tasks").doc(taskId).update({
+        await updateDoc(doc(db, "tasks", taskId), {
             people: people
         });
     } catch (error) {
@@ -1036,7 +1059,7 @@ async function removePerson(taskId, personIndex) {
     people.splice(personIndex, 1);
 
     try {
-        await db.collection("tasks").doc(taskId).update({
+        await updateDoc(doc(db, "tasks", taskId), {
             people: people
         });
     } catch (error) {
