@@ -1,0 +1,36 @@
+<body>
+
+<script>
+const PASSWORD = "A2026";
+
+const enteredPassword = prompt("🔒 Indtast password for at åbne FIXDAY");
+
+if (enteredPassword !== PASSWORD) {
+
+    document.body.innerHTML = `
+        <div style="
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:100vh;
+            background:#0f172a;
+            color:white;
+            font-family:'Segoe UI',sans-serif;
+            text-align:center;
+            padding:20px;
+        ">
+            <div>
+                <h1>❌ Adgang nægtet</h1>
+                <p>Forkert password.</p>
+            </div>
+        </div>
+    `;
+
+    throw new Error("Access denied");
+}
+</script>
+
+<header>
+    <h1>🔧 FIXDAY</h1>
+    <p>Work together. Get things done.</p>
+</header>
