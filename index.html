@@ -15,7 +15,7 @@
 
 body {
     background: #0f172a;
-    color: white;
+    color: #ffffff;
     min-height: 100vh;
 }
 
@@ -25,19 +25,19 @@ body {
 
 .login-screen {
     min-height: 100vh;
-    background: linear-gradient(135deg, #0f172a, #1d4ed8);
     display: flex;
     align-items: center;
     justify-content: center;
+    background: linear-gradient(135deg, #0f172a, #1e3a8a);
     padding: 20px;
 }
 
 .login-box {
     background: #111827;
-    width: 100%;
-    max-width: 420px;
     padding: 30px;
     border-radius: 22px;
+    width: 100%;
+    max-width: 420px;
     text-align: center;
     box-shadow: 0 20px 50px rgba(0,0,0,0.35);
 }
@@ -48,12 +48,17 @@ body {
 
 .login-box p {
     color: #cbd5e1;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
+}
+
+.login-box input {
+    text-align: center;
+    font-size: 18px;
 }
 
 header {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    padding: 42px 20px;
+    padding: 45px 20px;
     text-align: center;
 }
 
@@ -84,6 +89,7 @@ header p {
     padding: 20px;
     border-radius: 18px;
     text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
 .stat h2 {
@@ -96,26 +102,29 @@ header p {
     padding: 22px;
     border-radius: 18px;
     margin-bottom: 24px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+
+.form h2 {
+    margin-bottom: 15px;
 }
 
 label {
     display: block;
-    margin: 12px 0 6px;
+    margin: 10px 0 6px;
     color: #cbd5e1;
     font-size: 14px;
 }
 
 input,
-textarea,
-select {
+textarea {
     width: 100%;
     padding: 13px;
     background: #1f2937;
-    color: white;
+    color: #ffffff;
     border: 1px solid #334155;
     border-radius: 12px;
     outline: none;
-    font-size: 15px;
 }
 
 textarea {
@@ -123,9 +132,14 @@ textarea {
     resize: vertical;
 }
 
+input:focus,
+textarea:focus {
+    border-color: #60a5fa;
+}
+
 button {
     background: #2563eb;
-    color: white;
+    color: #ffffff;
     border: none;
     padding: 12px 18px;
     border-radius: 12px;
@@ -142,23 +156,29 @@ button.secondary {
     background: #374151;
 }
 
+button.secondary:hover {
+    background: #4b5563;
+}
+
 button.danger {
     background: #dc2626;
+}
+
+button.danger:hover {
+    background: #b91c1c;
 }
 
 button.success {
     background: #16a34a;
 }
 
+button.success:hover {
+    background: #15803d;
+}
+
 button:disabled {
     background: #64748b;
     cursor: not-allowed;
-}
-
-.top-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 15px;
 }
 
 .grid {
@@ -171,6 +191,9 @@ button:disabled {
     background: #111827;
     border-radius: 22px;
     overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+    display: flex;
+    flex-direction: column;
 }
 
 .card-img {
@@ -187,11 +210,12 @@ button:disabled {
     align-items: center;
     justify-content: center;
     color: #94a3b8;
-    font-size: 46px;
+    font-size: 48px;
 }
 
 .content {
     padding: 20px;
+    flex: 1;
 }
 
 .task-title {
@@ -208,7 +232,9 @@ button:disabled {
 .progress-row {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin: 14px 0 8px;
+    color: #e5e7eb;
 }
 
 .progress {
@@ -229,16 +255,8 @@ button:disabled {
     background: #ef4444;
 }
 
-.join-box {
-    background: #0f172a;
-    border: 1px solid #334155;
-    padding: 12px;
-    border-radius: 14px;
-    margin-top: 15px;
-}
-
 .people {
-    margin-top: 14px;
+    margin-top: 10px;
 }
 
 .person {
@@ -246,9 +264,6 @@ button:disabled {
     padding: 10px;
     border-radius: 12px;
     margin-top: 8px;
-}
-
-.person-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -280,7 +295,7 @@ button:disabled {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 12px;
+    margin-top: 16px;
 }
 
 .status-message {
@@ -289,8 +304,7 @@ button:disabled {
     font-size: 14px;
 }
 
-.empty,
-.loader {
+.empty {
     text-align: center;
     color: #94a3b8;
     padding: 40px;
@@ -298,10 +312,16 @@ button:disabled {
     border-radius: 18px;
 }
 
-.small-text {
-    color: #94a3b8;
-    font-size: 13px;
-    margin-top: 6px;
+.loader {
+    text-align: center;
+    color: #cbd5e1;
+    padding: 30px;
+}
+
+.top-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
 }
 
 @media (max-width: 700px) {
@@ -321,6 +341,10 @@ button:disabled {
         grid-template-columns: 1fr;
     }
 
+    .card-img {
+        height: 210px;
+    }
+
     button {
         width: 100%;
     }
@@ -337,23 +361,23 @@ button:disabled {
 <div id="loginScreen" class="login-screen">
     <div class="login-box">
         <h1>🔒 FIXDAY</h1>
-        <p>Indtast adgangskode for at åbne siden</p>
+        <p>Indtast adgangskode for at fortsætte</p>
 
         <input id="passwordInput" type="password" placeholder="Adgangskode">
 
         <button id="loginBtn">Åbn FIXDAY</button>
 
-        <p id="loginError" style="display:none;color:#fca5a5;margin-top:15px;">
+        <p id="loginError" style="color:#fca5a5;margin-top:15px;display:none;">
             Forkert adgangskode
         </p>
     </div>
 </div>
 
-<div id="appContainer" class="hidden">
+<div id="app" class="hidden">
 
     <header>
         <h1>🔧 FIXDAY</h1>
-        <p>Opret opgaver, tilmeld personer og følg status</p>
+        <p>Team opgaver, billeder og tilmelding</p>
     </header>
 
     <div class="container">
@@ -378,31 +402,16 @@ button:disabled {
             <h2>➕ Opret ny opgave</h2>
 
             <label>Opgavenavn</label>
-            <input id="taskName" placeholder="Fx Ryd depot, flyt borde, mal væg">
+            <input id="taskName" placeholder="Fx Ryd depot, mal væg, flyt borde">
 
             <label>Beskrivelse</label>
-            <textarea id="taskDescription" placeholder="Beskriv hvad der skal laves"></textarea>
+            <textarea id="taskDescription" placeholder="Skriv hvad der skal laves"></textarea>
 
             <label>Max antal personer</label>
-            <select id="taskMax">
-                <option value="1">1 person</option>
-                <option value="2">2 personer</option>
-                <option value="3">3 personer</option>
-                <option value="4">4 personer</option>
-                <option value="5">5 personer</option>
-                <option value="6">6 personer</option>
-                <option value="7">7 personer</option>
-                <option value="8">8 personer</option>
-                <option value="9">9 personer</option>
-                <option value="10">10 personer</option>
-            </select>
+            <input id="taskMax" type="number" value="1" min="1">
 
             <label>Billede til opgaven</label>
             <input id="taskImage" type="file" accept="image/*">
-
-            <p class="small-text">
-                Billedet bliver automatisk komprimeret, så upload går hurtigere.
-            </p>
 
             <button id="createTaskBtn">Opret opgave</button>
 
@@ -418,7 +427,8 @@ button:disabled {
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 
 import {
     getFirestore,
@@ -429,18 +439,17 @@ import {
     deleteDoc,
     onSnapshot,
     serverTimestamp,
-    runTransaction,
-    query,
-    orderBy
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+    runTransaction
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
 
 import {
     getStorage,
     ref,
     uploadBytes,
-    getDownloadURL,
-    deleteObject
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-storage.js";
+    getDownloadURL
+}
+from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDeKIZcW1Mvi4lYvaKRMOWdKk3ikFXwEAU",
@@ -454,15 +463,14 @@ const firebaseConfig = {
 
 const PASSWORD = "A2026";
 
-const firebaseApp = initializeApp(firebaseConfig);
-const db = getFirestore(firebaseApp);
-const storage = getStorage(firebaseApp);
+const appFirebase = initializeApp(firebaseConfig);
+const db = getFirestore(appFirebase);
+const storage = getStorage(appFirebase);
 
 let allTasks = [];
-let appStarted = false;
 
 const loginScreen = document.getElementById("loginScreen");
-const appContainer = document.getElementById("appContainer");
+const app = document.getElementById("app");
 const passwordInput = document.getElementById("passwordInput");
 const loginBtn = document.getElementById("loginBtn");
 const loginError = document.getElementById("loginError");
@@ -475,6 +483,14 @@ const taskImage = document.getElementById("taskImage");
 const createTaskBtn = document.getElementById("createTaskBtn");
 const createStatus = document.getElementById("createStatus");
 const taskList = document.getElementById("taskList");
+
+function checkLogin() {
+    if (sessionStorage.getItem("fixday_access") === "ok") {
+        loginScreen.classList.add("hidden");
+        app.classList.remove("hidden");
+        startApp();
+    }
+}
 
 loginBtn.addEventListener("click", login);
 
@@ -489,21 +505,13 @@ logoutBtn.addEventListener("click", function() {
     location.reload();
 });
 
-function checkLogin() {
-    if (sessionStorage.getItem("fixday_access") === "ok") {
-        loginScreen.classList.add("hidden");
-        appContainer.classList.remove("hidden");
-        startApp();
-    }
-}
-
 function login() {
-    const enteredPassword = passwordInput.value.trim();
+    const value = passwordInput.value.trim();
 
-    if (enteredPassword === PASSWORD) {
+    if (value === PASSWORD) {
         sessionStorage.setItem("fixday_access", "ok");
         loginScreen.classList.add("hidden");
-        appContainer.classList.remove("hidden");
+        app.classList.remove("hidden");
         startApp();
     } else {
         loginError.style.display = "block";
@@ -512,19 +520,16 @@ function login() {
     }
 }
 
+let appStarted = false;
+
 function startApp() {
     if (appStarted) return;
-
     appStarted = true;
+
     createTaskBtn.addEventListener("click", createTask);
 
-    const tasksQuery = query(
-        collection(db, "tasks"),
-        orderBy("createdAt", "desc")
-    );
-
     onSnapshot(
-        tasksQuery,
+        collection(db, "tasks"),
         function(snapshot) {
             allTasks = snapshot.docs.map(function(documentItem) {
                 return {
@@ -533,16 +538,21 @@ function startApp() {
                 };
             });
 
+            allTasks.sort(function(a, b) {
+                const aTime = a.createdAt && a.createdAt.seconds ? a.createdAt.seconds : 0;
+                const bTime = b.createdAt && b.createdAt.seconds ? b.createdAt.seconds : 0;
+                return bTime - aTime;
+            });
+
             renderTasks();
         },
         function(error) {
             console.error(error);
-
             taskList.innerHTML = `
                 <div class="empty">
                     Kunne ikke hente opgaver fra Firebase.
                     <br><br>
-                    Tjek Firestore Rules i Firebase Console.
+                    Tjek Firestore Rules.
                 </div>
             `;
         }
@@ -557,7 +567,11 @@ async function createTask() {
 
     if (!name) {
         alert("Skriv et opgavenavn");
-        taskName.focus();
+        return;
+    }
+
+    if (max < 1) {
+        alert("Max antal personer skal være mindst 1");
         return;
     }
 
@@ -569,28 +583,13 @@ async function createTask() {
         let imagePath = "";
 
         if (file) {
-            createStatus.textContent = "Komprimerer billede...";
-
-            let imageBlob;
-
-            try {
-                imageBlob = await compressImage(file, 1200, 0.75);
-            } catch (error) {
-                console.warn("Kunne ikke komprimere billedet. Uploader original fil.", error);
-                imageBlob = file;
-            }
-
             createStatus.textContent = "Uploader billede...";
 
             const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-            imagePath = "task-images/" + Date.now() + "-" + safeFileName + ".jpg";
+            imagePath = "task-images/" + Date.now() + "-" + safeFileName;
 
             const imageRef = ref(storage, imagePath);
-
-            await uploadBytes(imageRef, imageBlob, {
-                contentType: "image/jpeg"
-            });
-
+            await uploadBytes(imageRef, file);
             imageUrl = await getDownloadURL(imageRef);
         }
 
@@ -617,65 +616,18 @@ async function createTask() {
 
     } catch (error) {
         console.error(error);
-        alert("Kunne ikke oprette opgaven. Tjek Firestore og Storage regler.");
+        alert("Kunne ikke oprette opgaven. Tjek Firebase Firestore og Storage regler.");
         createStatus.textContent = "Fejl ved oprettelse";
     }
 
     createTaskBtn.disabled = false;
 }
 
-function compressImage(file, maxWidth, quality) {
-    return new Promise(function(resolve, reject) {
-        const reader = new FileReader();
-
-        reader.onload = function(event) {
-            const img = new Image();
-
-            img.onload = function() {
-                let width = img.width;
-                let height = img.height;
-
-                if (width > maxWidth) {
-                    height = Math.round((height * maxWidth) / width);
-                    width = maxWidth;
-                }
-
-                const canvas = document.createElement("canvas");
-                canvas.width = width;
-                canvas.height = height;
-
-                const ctx = canvas.getContext("2d");
-                ctx.drawImage(img, 0, 0, width, height);
-
-                canvas.toBlob(
-                    function(blob) {
-                        if (!blob) {
-                            reject(new Error("Kunne ikke lave billede"));
-                            return;
-                        }
-
-                        resolve(blob);
-                    },
-                    "image/jpeg",
-                    quality
-                );
-            };
-
-            img.onerror = reject;
-            img.src = event.target.result;
-        };
-
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
-}
-
 function renderTasks() {
     let totalParticipants = 0;
 
     allTasks.forEach(function(task) {
-        const people = Array.isArray(task.people) ? task.people : [];
-        totalParticipants += people.length;
+        totalParticipants += Array.isArray(task.people) ? task.people.length : 0;
     });
 
     document.getElementById("taskCount").textContent = allTasks.length;
@@ -699,36 +651,35 @@ function renderTasks() {
         const isFull = people.length >= max;
 
         const imageHtml = task.imageUrl
-            ? `${escapeHtml(task.imageUrl)}`
+            ? `<img src="${escapeHtml(task.imageUrl)}" class="card-img" alt="Opgavebillede">`
             : `<div class="no-img">📷</div>`;
 
         const peopleHtml = people.length
             ? people.map(function(person, index) {
                 const done = person.done === true;
-
                 return `
                     <div class="person">
-                        <div class="person-top">
-                            <span class="person-name">
-                                ${done ? "✅" : "⏳"} ${escapeHtml(person.name)}
-                            </span>
+                        <span class="person-name">
+                            ${done ? "✅" : "⏳"} ${escapeHtml(person.name)}
+                        </span>
 
+                        <span>
                             <span class="badge ${done ? "done" : "waiting"}">
-                                ${done ? "Udført" : "Tilmeldt"}
+                                ${done ? "Udført" : "I gang"}
                             </span>
-                        </div>
+                        </span>
+                    </div>
 
-                        <div class="actions">
-                            ${!done ? `
-                                done
-                                    Markér udført
-                                </button>
-                            ` : ""}
-
-                            remove-person
-                                Fjern person
+                    <div class="actions">
+                        ${!done ? `
+                            <button data-action="done" data-task-id="${task.id}" data-person-index="${index}" class="success">
+                                Markér udført
                             </button>
-                        </div>
+                        ` : ""}
+
+                        <button data-action="remove-person" data-task-id="${task.id}" data-person-index="${index}" class="danger">
+                            Fjern person
+                        </button>
                     </div>
                 `;
             }).join("")
@@ -752,37 +703,21 @@ function renderTasks() {
                         <div class="progress-fill" style="width:${percent}%"></div>
                     </div>
 
-                    <div class="join-box">
-                        <label>Skriv dit navn og tilmeld dig</label>
-
-                        <input
-                            id="joinName-${task.id}"
-                            placeholder="Dit navn"
-                            ${isFull ? "disabled" : ""}
-                        >
-
-                        join
-                            ${isFull ? "Opgaven er fuld" : "Tilmeld mig"}
-                        </button>
-                    </div>
-
                     <div class="people">
                         ${peopleHtml}
                     </div>
 
                     <div class="actions">
-                        edit
-                            Rediger opgave
+                        <button data-action="join" data-task-id="${task.id}" class="success" ${isFull ? "disabled" : ""}>
+                            ${isFull ? "Opgaven er fuld" : "Jeg kommer"}
                         </button>
 
-                        change-image
-                            Skift billede
+                        <button data-action="edit" data-task-id="${task.id}" class="secondary">
+                            Rediger
                         </button>
 
-                        change-image-input
-
-                        delete
-                            Slet opgave
+                        <button data-action="delete" data-task-id="${task.id}" class="danger">
+                            Slet
                         </button>
                     </div>
                 </div>
@@ -793,6 +728,7 @@ function renderTasks() {
 
 taskList.addEventListener("click", async function(event) {
     const button = event.target.closest("button");
+
     if (!button) return;
 
     const action = button.dataset.action;
@@ -820,41 +756,14 @@ taskList.addEventListener("click", async function(event) {
     if (action === "remove-person") {
         await removePerson(taskId, parseInt(personIndex));
     }
-
-    if (action === "change-image") {
-        const input = document.getElementById("changeImage-" + taskId);
-        if (input) input.click();
-    }
-});
-
-taskList.addEventListener("change", async function(event) {
-    const input = event.target;
-
-    if (input.dataset.action !== "change-image-input") return;
-
-    const taskId = input.dataset.taskId;
-    const file = input.files[0];
-
-    if (!taskId || !file) return;
-
-    await changeTaskImage(taskId, file);
 });
 
 async function joinTask(taskId) {
-    const nameInput = document.getElementById("joinName-" + taskId);
+    const personName = prompt("Skriv dit navn");
 
-    if (!nameInput) {
-        alert("Navnefeltet blev ikke fundet");
-        return;
-    }
+    if (!personName || !personName.trim()) return;
 
-    const personName = nameInput.value.trim();
-
-    if (!personName) {
-        alert("Skriv dit navn først");
-        nameInput.focus();
-        return;
-    }
+    const cleanName = personName.trim();
 
     try {
         const taskRef = doc(db, "tasks", taskId);
@@ -871,11 +780,11 @@ async function joinTask(taskId) {
             const max = task.max || 1;
 
             const alreadyJoined = people.some(function(person) {
-                return person.name.toLowerCase() === personName.toLowerCase();
+                return person.name.toLowerCase() === cleanName.toLowerCase();
             });
 
             if (alreadyJoined) {
-                throw new Error("Du er allerede tilmeldt denne opgave");
+                throw new Error("Du er allerede tilmeldt");
             }
 
             if (people.length >= max) {
@@ -883,7 +792,7 @@ async function joinTask(taskId) {
             }
 
             people.push({
-                name: personName,
+                name: cleanName,
                 done: false
             });
 
@@ -891,8 +800,6 @@ async function joinTask(taskId) {
                 people: people
             });
         });
-
-        nameInput.value = "";
 
     } catch (error) {
         alert(error.message || "Kunne ikke tilmelde dig");
@@ -912,14 +819,15 @@ async function editTask(taskId) {
     const newDescription = prompt("Ret beskrivelse", task.description || "");
     if (newDescription === null) return;
 
-    const currentMax = task.max || 1;
-    const newMaxText = prompt("Ret max antal personer, 1-10", currentMax);
+    const newMaxText = prompt("Ret max antal personer", task.max || 1);
     if (newMaxText === null) return;
 
-    let newMax = parseInt(newMaxText) || currentMax;
+    const newMax = parseInt(newMaxText) || 1;
 
-    if (newMax < 1) newMax = 1;
-    if (newMax > 10) newMax = 10;
+    if (newMax < 1) {
+        alert("Max antal skal være mindst 1");
+        return;
+    }
 
     const people = Array.isArray(task.people) ? task.people : [];
 
@@ -940,56 +848,6 @@ async function editTask(taskId) {
     }
 }
 
-async function changeTaskImage(taskId, file) {
-    const task = allTasks.find(function(item) {
-        return item.id === taskId;
-    });
-
-    if (!task) return;
-
-    try {
-        alert("Uploader nyt billede. Vent et øjeblik.");
-
-        let imageBlob;
-
-        try {
-            imageBlob = await compressImage(file, 1200, 0.75);
-        } catch (error) {
-            imageBlob = file;
-        }
-
-        const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-        const newImagePath = "task-images/" + Date.now() + "-" + safeFileName + ".jpg";
-
-        const imageRef = ref(storage, newImagePath);
-
-        await uploadBytes(imageRef, imageBlob, {
-            contentType: "image/jpeg"
-        });
-
-        const newImageUrl = await getDownloadURL(imageRef);
-
-        await updateDoc(doc(db, "tasks", taskId), {
-            imageUrl: newImageUrl,
-            imagePath: newImagePath
-        });
-
-        if (task.imagePath) {
-            try {
-                await deleteObject(ref(storage, task.imagePath));
-            } catch (error) {
-                console.warn("Gammelt billede kunne ikke slettes.", error);
-            }
-        }
-
-        alert("Billedet er opdateret ✅");
-
-    } catch (error) {
-        console.error(error);
-        alert("Kunne ikke skifte billede. Tjek Firebase Storage regler.");
-    }
-}
-
 async function deleteTask(taskId) {
     const task = allTasks.find(function(item) {
         return item.id === taskId;
@@ -1003,15 +861,6 @@ async function deleteTask(taskId) {
 
     try {
         await deleteDoc(doc(db, "tasks", taskId));
-
-        if (task.imagePath) {
-            try {
-                await deleteObject(ref(storage, task.imagePath));
-            } catch (imageError) {
-                console.warn("Opgaven blev slettet, men billedet kunne ikke slettes.", imageError);
-            }
-        }
-
     } catch (error) {
         console.error(error);
         alert("Kunne ikke slette opgaven");
