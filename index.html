@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIXDAY Team Opgaver</title>
+<title>FIXDAY Team Tasks</title>
 
 <style>
 * {
@@ -340,14 +340,14 @@ button:disabled {
 <div id="loginScreen" class="login-screen">
     <div class="login-box">
         <h1>🔒 FIXDAY</h1>
-        <p>Indtast adgangskode for at fortsætte</p>
+        <p>Enter password to continue</p>
 
-        <input id="passwordInput" type="password" placeholder="Adgangskode">
+        <input id="passwordInput" type="password" placeholder="Password">
 
-        <button id="loginBtn">Åbn FIXDAY</button>
+        <button id="loginBtn">Open FIXDAY</button>
 
         <p id="loginError" style="color:#fca5a5;margin-top:15px;display:none;">
-            Forkert adgangskode
+            Incorrect password
         </p>
     </div>
 </div>
@@ -356,46 +356,46 @@ button:disabled {
 
     <header>
         <h1>🔧 FIXDAY</h1>
-        <p>Team opgaver og tilmelding</p>
+        <p>Team tasks and registration</p>
     </header>
 
     <div class="container">
 
         <div class="top-actions">
-            <button id="logoutBtn" class="secondary">Log ud</button>
+            <button id="logoutBtn" class="secondary">Log out</button>
         </div>
 
         <div class="dashboard">
             <div class="stat">
                 <h2 id="taskCount">0</h2>
-                <p>Opgaver</p>
+                <p>Tasks</p>
             </div>
 
             <div class="stat">
                 <h2 id="participantCount">0</h2>
-                <p>Tilmeldinger</p>
+                <p>Participants</p>
             </div>
         </div>
 
         <div class="form">
-            <h2>➕ Opret ny opgave</h2>
+            <h2>➕ Create new task</h2>
 
-            <label>Opgavenavn</label>
-            <input id="taskName" placeholder="Fx Ryd depot, mal væg, flyt borde">
+            <label>Task name</label>
+            <input id="taskName" placeholder="E.g., Clean storage, paint wall, move tables">
 
-            <label>Beskrivelse</label>
-            <textarea id="taskDescription" placeholder="Skriv hvad der skal laves"></textarea>
+            <label>Description</label>
+            <textarea id="taskDescription" placeholder="Write what needs to be done"></textarea>
 
-            <label>Max antal personer</label>
+            <label>Max number of people</label>
             <input id="taskMax" type="number" value="1" min="1">
 
-            <button id="createTaskBtn">Opret opgave</button>
+            <button id="createTaskBtn">Create task</button>
 
             <div id="createStatus" class="status-message"></div>
         </div>
 
         <div id="taskList" class="grid">
-            <div class="loader">Indlæser opgaver...</div>
+            <div class="loader">Loading tasks...</div>
         </div>
 
     </div>
@@ -516,9 +516,9 @@ function startApp() {
             console.error(error);
             taskList.innerHTML = `
                 <div class="empty">
-                    Kunne ikke hente opgaver fra Firebase.
+                    Could not fetch tasks from Firebase.
                     <br><br>
-                    Tjek Firestore Rules.
+                    Check Firestore Rules.
                 </div>
             `;
         }
@@ -531,17 +531,17 @@ async function createTask() {
     const max = parseInt(taskMax.value) || 1;
 
     if (!name) {
-        alert("Skriv et opgavenavn");
+        alert("Enter a task name");
         return;
     }
 
     if (max < 1) {
-        alert("Max antal personer skal være mindst 1");
+        alert("Max number of people must be at least 1");
         return;
     }
 
     createTaskBtn.disabled = true;
-    createStatus.textContent = "Gemmer opgave...";
+    createStatus.textContent = "Saving task...";
 
     try {
         await addDoc(collection(db, "tasks"), {
@@ -556,7 +556,7 @@ async function createTask() {
         taskDescription.value = "";
         taskMax.value = "1";
 
-        createStatus.textContent = "Opgaven er oprettet ✅";
+        createStatus.textContent = "Task created ✅";
 
         setTimeout(function() {
             createStatus.textContent = "";
@@ -564,8 +564,8 @@ async function createTask() {
 
     } catch (error) {
         console.error(error);
-        alert("Kunne ikke oprette opgaven. Tjek Firebase Firestore regler.");
-        createStatus.textContent = "Fejl ved oprettelse";
+        alert("Could not create task. Check Firebase Firestore rules.");
+        createStatus.textContent = "Error creating task";
     }
 
     createTaskBtn.disabled = false;
@@ -584,9 +584,9 @@ function renderTasks() {
     if (allTasks.length === 0) {
         taskList.innerHTML = `
             <div class="empty">
-                Ingen opgaver endnu.
+                No tasks yet.
                 <br>
-                Opret den første opgave ovenfor.
+                Create the first task above.
             </div>
         `;
         return;
@@ -609,7 +609,7 @@ function renderTasks() {
 
                         <span>
                             <span class="badge ${done ? "done" : "waiting"}">
-                                ${done ? "Udført" : "I gang"}
+                                ${done ? "Done" : "In progress"}
                             </span>
                         </span>
                     </div>
@@ -617,17 +617,17 @@ function renderTasks() {
                     <div class="actions">
                         ${!done ? `
                             <button data-action="done" data-task-id="${task.id}" data-person-index="${index}" class="success">
-                                Markér udført
+                                Mark as done
                             </button>
                         ` : ""}
 
                         <button data-action="remove-person" data-task-id="${task.id}" data-person-index="${index}" class="danger">
-                            Fjern person
+                            Remove person
                         </button>
                     </div>
                 `;
             }).join("")
-            : `<p style="color:#94a3b8;margin-top:10px;">Ingen tilmeldte endnu</p>`;
+            : `<p style="color:#94a3b8;margin-top:10px;">No participants yet</p>`;
 
         return `
             <div class="card ${isFull ? "full" : ""}">
@@ -637,7 +637,7 @@ function renderTasks() {
                     <p class="description">${escapeHtml(task.description || "")}</p>
 
                     <div class="progress-row">
-                        <span>Deltagere</span>
+                        <span>Participants</span>
                         <strong>${people.length}/${max}</strong>
                     </div>
 
@@ -651,15 +651,15 @@ function renderTasks() {
 
                     <div class="actions">
                         <button data-action="join" data-task-id="${task.id}" class="success" ${isFull ? "disabled" : ""}>
-                            ${isFull ? "Opgaven er fuld" : "Jeg kommer"}
+                            ${isFull ? "Task is full" : "Join"}
                         </button>
 
                         <button data-action="edit" data-task-id="${task.id}" class="secondary">
-                            Rediger
+                            Edit
                         </button>
 
                         <button data-action="delete" data-task-id="${task.id}" class="danger">
-                            Slet
+                            Delete
                         </button>
                     </div>
                 </div>
@@ -701,7 +701,7 @@ taskList.addEventListener("click", async function(event) {
 });
 
 async function joinTask(taskId) {
-    const personName = prompt("Skriv dit navn");
+    const personName = prompt("Enter your name");
 
     if (!personName || !personName.trim()) return;
 
@@ -714,7 +714,7 @@ async function joinTask(taskId) {
             const taskSnap = await transaction.get(taskRef);
 
             if (!taskSnap.exists()) {
-                throw new Error("Opgaven findes ikke længere");
+                throw new Error("Task no longer exists");
             }
 
             const task = taskSnap.data();
@@ -726,11 +726,11 @@ async function joinTask(taskId) {
             });
 
             if (alreadyJoined) {
-                throw new Error("Du er allerede tilmeldt");
+                throw new Error("You are already registered");
             }
 
             if (people.length >= max) {
-                throw new Error("Opgaven er fuld");
+                throw new Error("Task is full");
             }
 
             people.push({
@@ -744,7 +744,7 @@ async function joinTask(taskId) {
         });
 
     } catch (error) {
-        alert(error.message || "Kunne ikke tilmelde dig");
+        alert(error.message || "Could not register you");
     }
 }
 
@@ -755,26 +755,26 @@ async function editTask(taskId) {
 
     if (!task) return;
 
-    const newName = prompt("Ret opgavenavn", task.name || "");
+    const newName = prompt("Edit task name", task.name || "");
     if (newName === null) return;
 
-    const newDescription = prompt("Ret beskrivelse", task.description || "");
+    const newDescription = prompt("Edit description", task.description || "");
     if (newDescription === null) return;
 
-    const newMaxText = prompt("Ret max antal personer", task.max || 1);
+    const newMaxText = prompt("Edit max number of people", task.max || 1);
     if (newMaxText === null) return;
 
     const newMax = parseInt(newMaxText) || 1;
 
     if (newMax < 1) {
-        alert("Max antal skal være mindst 1");
+        alert("Max number must be at least 1");
         return;
     }
 
     const people = Array.isArray(task.people) ? task.people : [];
 
     if (newMax < people.length) {
-        alert("Du kan ikke sætte max lavere end antal personer, der allerede er tilmeldt.");
+        alert("You cannot set max lower than the number of people already registered.");
         return;
     }
 
@@ -786,7 +786,7 @@ async function editTask(taskId) {
         });
     } catch (error) {
         console.error(error);
-        alert("Kunne ikke redigere opgaven");
+        alert("Could not edit task");
     }
 }
 
@@ -797,7 +797,7 @@ async function deleteTask(taskId) {
 
     if (!task) return;
 
-    const yes = confirm("Vil du slette opgaven: " + task.name + "?");
+    const yes = confirm("Do you want to delete the task: " + task.name + "?");
 
     if (!yes) return;
 
@@ -805,7 +805,7 @@ async function deleteTask(taskId) {
         await deleteDoc(doc(db, "tasks", taskId));
     } catch (error) {
         console.error(error);
-        alert("Kunne ikke slette opgaven");
+        alert("Could not delete task");
     }
 }
 
@@ -828,7 +828,7 @@ async function completePerson(taskId, personIndex) {
         });
     } catch (error) {
         console.error(error);
-        alert("Kunne ikke markere som udført");
+        alert("Could not mark as done");
     }
 }
 
@@ -843,7 +843,7 @@ async function removePerson(taskId, personIndex) {
 
     if (!people[personIndex]) return;
 
-    const yes = confirm("Vil du fjerne " + people[personIndex].name + " fra opgaven?");
+    const yes = confirm("Do you want to remove " + people[personIndex].name + " from the task?");
 
     if (!yes) return;
 
@@ -855,7 +855,7 @@ async function removePerson(taskId, personIndex) {
         });
     } catch (error) {
         console.error(error);
-        alert("Kunne ikke fjerne personen");
+        alert("Could not remove person");
     }
 }
 
