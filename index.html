@@ -51,6 +51,7 @@ header {
     padding: 45px 20px;
     text-align: center;
 }
+
 header h1 { font-size: 38px; margin-bottom: 8px; }
 header p { color: #dbeafe; }
 
@@ -74,6 +75,7 @@ header p { color: #dbeafe; }
     text-align: center;
     box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
+
 .stat h2 { font-size: 34px; color: #60a5fa; }
 
 .form {
@@ -102,6 +104,7 @@ input, textarea {
     border-radius: 12px;
     outline: none;
 }
+
 textarea { min-height: 90px; resize: vertical; }
 input:focus, textarea:focus { border-color: #60a5fa; }
 
@@ -115,6 +118,7 @@ button {
     font-weight: 600;
     margin-top: 8px;
 }
+
 button:hover { background: #1d4ed8; }
 button.secondary { background: #374151; }
 button.secondary:hover { background: #4b5563; }
@@ -170,27 +174,10 @@ button:disabled { background: #64748b; cursor: not-allowed; }
 .badge.waiting { background: #92400e; color: #fde68a; }
 .badge.done { background: #14532d; color: #bbf7d0; }
 .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-.status-message { margin-top: 10px; color: #cbd5e1; font-size: 14px; }
+.status-message { margin-top: 10px; color: #cbd5e1; font-size: 14px; font-weight: 500; }
 .empty { text-align: center; color: #94a3b8; padding: 40px; background: #111827; border-radius: 18px; }
 .loader { text-align: center; color: #cbd5e1; padding: 30px; }
 .top-actions { display: flex; justify-content: flex-end; margin-bottom: 15px; }
-
-/* DEBUG BOKS DESIGN */
-#debugTerminal {
-    background: #000000;
-    color: #a7f3d0;
-    font-family: monospace;
-    font-size: 13px;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 24px;
-    height: 200px;
-    overflow-y: auto;
-    border: 1px solid #374151;
-}
-.debug-error { color: #fca5a5; font-weight: bold; }
-.debug-success { color: #34d399; }
-.debug-time { color: #6b7280; margin-right: 8px; }
 
 @media (max-width: 700px) {
     header { padding: 32px 16px; }
@@ -228,26 +215,31 @@ button:disabled { background: #64748b; cursor: not-allowed; }
         </div>
 
         <div class="dashboard">
-            <div class="stat"><h2 id="taskCount">0</h2><p>Opgaver</p></div>
-            <div class="stat"><h2 id="participantCount">0</h2><p>Tilmeldinger</p></div>
-        </div>
-
-        <!-- FEJLSØGNINGS TERMINAL -->
-        <div id="debugTerminal">
-            <div><span class="debug-time">---</span> Klar til fejlsøgning. Venter på handling...</div>
+            <div class="stat">
+                <h2 id="taskCount">0</h2>
+                <p>Opgaver</p>
+            </div>
+            <div class="stat">
+                <h2 id="participantCount">0</h2>
+                <p>Tilmeldinger</p>
+            </div>
         </div>
 
         <div class="form">
             <h2>➕ Opret ny opgave</h2>
+
             <label>Opgavenavn</label>
             <input id="taskName" placeholder="Fx Ryd depot, mal væg, flyt borde">
+
             <label>Beskrivelse</label>
             <textarea id="taskDescription" placeholder="Skriv hvad der skal laves"></textarea>
+
             <label>Max antal personer</label>
             <input id="taskMax" type="number" value="1" min="1">
+
             <label>Billede til opgaven</label>
             <input id="taskImage" type="file" accept="image/*">
-            
+
             <button id="createTaskBtn">Opret opgave</button>
             <div id="createStatus" class="status-message"></div>
         </div>
@@ -261,7 +253,8 @@ button:disabled { background: #64748b; cursor: not-allowed; }
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, serverTimestamp, runTransaction } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-import { getStorage, ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
+// VIGTIGT: Både uploadBytes (til originale filer) og uploadString (til komprimerede) er importeret.
+import { getStorage, ref, uploadBytes, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDeKIZcW1Mvi4lYvaKRMOWdKk3ikFXwEAU",
@@ -277,6 +270,7 @@ const PASSWORD = "A2026";
 const appFirebase = initializeApp(firebaseConfig);
 const db = getFirestore(appFirebase);
 const storage = getStorage(appFirebase);
+
 let allTasks = [];
 
 const loginScreen = document.getElementById("loginScreen");
@@ -293,16 +287,6 @@ const taskImage = document.getElementById("taskImage");
 const createTaskBtn = document.getElementById("createTaskBtn");
 const createStatus = document.getElementById("createStatus");
 const taskList = document.getElementById("taskList");
-
-// --- FEJLSØGNINGS FUNKTION ---
-const debugTerminal = document.getElementById("debugTerminal");
-function logDebug(message, isError = false) {
-    const time = new Date().toLocaleTimeString('da-DK');
-    let cssClass = isError ? "debug-error" : "debug-success";
-    debugTerminal.innerHTML += `<div><span class="debug-time">[${time}]</span> <span class="${cssClass}">${message}</span></div>`;
-    debugTerminal.scrollTop = debugTerminal.scrollHeight; // Scroll altid til bunden
-    console.log(`[DEBUG] ${message}`);
-}
 
 function checkLogin() {
     if (sessionStorage.getItem("fixday_access") === "ok") {
@@ -333,44 +317,37 @@ let appStarted = false;
 function startApp() {
     if (appStarted) return;
     appStarted = true;
-    
-    logDebug("App startet. Opretter forbindelse til Firestore...");
     createTaskBtn.addEventListener("click", createTask);
 
     onSnapshot(collection(db, "tasks"), 
         (snapshot) => {
-            logDebug(`Hentede ${snapshot.docs.length} opgaver fra databasen.`);
             allTasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             allTasks.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
             renderTasks();
         },
         (error) => {
-            logDebug(`Fejl ved hentning af opgaver: ${error.message} (Kode: ${error.code})`, true);
-            taskList.innerHTML = `<div class="empty debug-error">Kunne ikke hente opgaver. Tjek Firestore rettigheder!</div>`;
+            console.error(error);
+            taskList.innerHTML = `<div class="empty">Kunne ikke hente opgaver. Tjek rettigheder.</div>`;
         }
     );
 }
 
-// BILLEDKOMPRIMERING MED DEBUG OG TIMEOUT
+// DEN SKUDSIKRE KOMPRIMERINGS-FUNKTION
 function compressImage(file, maxWidth = 1000, quality = 0.7) {
     return new Promise((resolve, reject) => {
-        logDebug(`Starter komprimering af fil: ${file.name} (${(file.size / 1024).toFixed(0)} KB)`);
-        
-        // Timeout hvis browseren fryser på et ukendt format (f.eks. .avif)
-        const timeout = setTimeout(() => {
-            reject(new Error("Browseren frøs under komprimering. Prøv et andet filformat (JPG/PNG)."));
-        }, 8000);
+        // Blokerer formater vi VED skaber problemer (så den ikke fryser)
+        const problemFormats = ['image/avif', 'image/heic', 'image/heif'];
+        if (problemFormats.includes(file.type.toLowerCase())) {
+            return reject(new Error("Drilsk filformat, springer komprimering over."));
+        }
 
+        const timeout = setTimeout(() => reject(new Error("Timeout")), 8000);
         const reader = new FileReader();
-        reader.readAsDataURL(file);
         
         reader.onload = (event) => {
             const img = new Image();
-            img.src = event.target.result;
-            
             img.onload = () => {
                 clearTimeout(timeout);
-                logDebug("Billede indlæst i hukommelsen. Skalerer...");
                 let width = img.width, height = img.height;
                 if (width > maxWidth) {
                     height = Math.round((height * maxWidth) / width);
@@ -382,19 +359,15 @@ function compressImage(file, maxWidth = 1000, quality = 0.7) {
                 ctx.drawImage(img, 0, 0, width, height);
                 resolve(canvas.toDataURL('image/jpeg', quality));
             };
-            img.onerror = () => {
-                clearTimeout(timeout);
-                reject(new Error("Browseren kan ikke tegne dette billedformat (prøv at konvertere til JPG)."));
-            };
+            img.onerror = () => { clearTimeout(timeout); reject(new Error("Kan ikke tegne billede.")); };
+            img.src = event.target.result;
         };
-        reader.onerror = () => {
-            clearTimeout(timeout);
-            reject(new Error("Kunne ikke læse filen fra computeren."));
-        };
+        reader.onerror = () => { clearTimeout(timeout); reject(new Error("Læsefejl.")); };
+        reader.readAsDataURL(file);
     });
 }
 
-// OPRET OPGAVE MED FULD DEBUGGING
+// DEN NYE, STABILE OPRET-FUNKTION
 async function createTask() {
     const name = taskName.value.trim();
     const description = taskDescription.value.trim();
@@ -405,34 +378,38 @@ async function createTask() {
     if (max < 1) { alert("Max antal personer skal være mindst 1"); return; }
 
     createTaskBtn.disabled = true;
-    logDebug("--- Starter oprettelse af ny opgave ---");
+    createStatus.style.color = "#cbd5e1";
 
     try {
         let imageUrl = "";
         let imagePath = "";
 
         if (file) {
-            createStatus.textContent = "Komprimerer billede...";
-            const compressedBase64 = await compressImage(file, 1000, 0.75);
-            logDebug("Komprimering lykkedes!");
-
-            const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-            imagePath = "task-images/" + Date.now() + "-" + safeFileName + ".jpg";
-            
-            createStatus.textContent = "Uploader til Storage...";
-            logDebug(`Uploader til sti: ${imagePath}`);
-            
+            // Find filendelsen (fx .jpg, .avif)
+            const ext = file.name.split('.').pop() || "jpg";
+            imagePath = `task-images/task_${Date.now()}.${ext}`;
             const imageRef = ref(storage, imagePath);
-            await uploadString(imageRef, compressedBase64, 'data_url');
-            logDebug("Upload til Storage lykkedes. Henter download link...");
-            
+
+            createStatus.textContent = "Behandler billede...";
+
+            try {
+                // Forsøg at komprimere billedet først
+                const compressedBase64 = await compressImage(file, 1000, 0.75);
+                createStatus.textContent = "Uploader komprimeret billede (hurtigt)...";
+                await uploadString(imageRef, compressedBase64, 'data_url');
+            } catch (err) {
+                // HVIS KOMPRIMERING FEJLER (fx pga .avif): Upload bare originalen!
+                console.warn("Komprimering sprunget over:", err.message);
+                createStatus.textContent = "Uploader original fil (tager lidt længere)...";
+                await uploadBytes(imageRef, file);
+            }
+
+            createStatus.textContent = "Henter link...";
             imageUrl = await getDownloadURL(imageRef);
-            logDebug(`Download link hentet.`);
         }
 
-        createStatus.textContent = "Gemmer i database...";
-        logDebug("Gemmer opgavedata i Firestore 'tasks' kollektionen...");
-        
+        createStatus.textContent = "Gemmer opgave...";
+
         await addDoc(collection(db, "tasks"), {
             name: name,
             description: description,
@@ -443,23 +420,18 @@ async function createTask() {
             createdAt: serverTimestamp()
         });
 
-        logDebug("Opgave oprettet med succes i databasen!");
-        createStatus.textContent = "Opgaven er oprettet ✅";
-        
         taskName.value = ""; taskDescription.value = ""; taskMax.value = "1"; taskImage.value = "";
-        setTimeout(() => createStatus.textContent = "", 2500);
+        createStatus.style.color = "#4ade80"; // Grøn
+        createStatus.textContent = "Opgaven er oprettet ✅";
+        setTimeout(() => createStatus.textContent = "", 3000);
 
     } catch (error) {
-        // DET ER HER VI FANGER FEJLEN!
-        logDebug(`CRASH: ${error.message}`, true);
-        if (error.code) logDebug(`FIREBASE KODE: ${error.code}`, true);
-        
-        createStatus.textContent = "Fejl ved oprettelse! Se debug-boksen.";
-        createStatus.style.color = "#fca5a5";
+        console.error("Fejl:", error);
+        createStatus.style.color = "#fca5a5"; // Rød
+        createStatus.textContent = "Fejl ved oprettelse! Prøv igen.";
     }
 
     createTaskBtn.disabled = false;
-    logDebug("--- Oprettelse afsluttet ---");
 }
 
 function renderTasks() {
@@ -527,7 +499,6 @@ taskList.addEventListener("click", async function(event) {
     if (action === "remove-person") await removePerson(taskId, parseInt(personIndex));
 });
 
-// For at holde filen overskuelig er joinTask, editTask osv. minimeret her, men bevaret.
 async function joinTask(taskId) {
     const personName = prompt("Skriv dit navn");
     if (!personName || !personName.trim()) return;
@@ -555,14 +526,14 @@ async function editTask(taskId) {
     const newMax = parseInt(newMaxText) || 1;
     if (newMax < (task.people?.length || 0)) { alert("Max kan ikke være lavere end antal tilmeldte."); return; }
     try { await updateDoc(doc(db, "tasks", taskId), { name: newName.trim() || task.name, description: newDesc.trim(), max: newMax }); }
-    catch (e) { logDebug("Fejl ved redigering: " + e.message, true); }
+    catch (e) { console.error(e); }
 }
 
 async function deleteTask(taskId) {
     const task = allTasks.find(item => item.id === taskId);
     if (!task || !confirm("Slet: " + task.name + "?")) return;
     try { await deleteDoc(doc(db, "tasks", taskId)); } 
-    catch (e) { logDebug("Fejl ved sletning: " + e.message, true); }
+    catch (e) { console.error(e); }
 }
 
 async function completePerson(taskId, personIndex) {
@@ -571,7 +542,7 @@ async function completePerson(taskId, personIndex) {
     const people = [...task.people];
     people[personIndex].done = true;
     try { await updateDoc(doc(db, "tasks", taskId), { people }); }
-    catch (e) { logDebug("Fejl ved opdatering: " + e.message, true); }
+    catch (e) { console.error(e); }
 }
 
 async function removePerson(taskId, personIndex) {
@@ -580,7 +551,7 @@ async function removePerson(taskId, personIndex) {
     const people = [...task.people];
     people.splice(personIndex, 1);
     try { await updateDoc(doc(db, "tasks", taskId), { people }); }
-    catch (e) { logDebug("Fejl ved fjernelse: " + e.message, true); }
+    catch (e) { console.error(e); }
 }
 
 function escapeHtml(value) {
