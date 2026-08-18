@@ -42,34 +42,17 @@ body {
     box-shadow: 0 20px 50px rgba(0,0,0,0.35);
 }
 
-.login-box h1 {
-    margin-bottom: 10px;
-}
-
-.login-box p {
-    color: #cbd5e1;
-    margin-bottom: 20px;
-}
-
-.login-box input {
-    text-align: center;
-    font-size: 18px;
-}
+.login-box h1 { margin-bottom: 10px; }
+.login-box p { color: #cbd5e1; margin-bottom: 20px; }
+.login-box input { text-align: center; font-size: 18px; }
 
 header {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
     padding: 45px 20px;
     text-align: center;
 }
-
-header h1 {
-    font-size: 38px;
-    margin-bottom: 8px;
-}
-
-header p {
-    color: #dbeafe;
-}
+header h1 { font-size: 38px; margin-bottom: 8px; }
+header p { color: #dbeafe; }
 
 .container {
     max-width: 1200px;
@@ -91,11 +74,7 @@ header p {
     text-align: center;
     box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
-
-.stat h2 {
-    font-size: 34px;
-    color: #60a5fa;
-}
+.stat h2 { font-size: 34px; color: #60a5fa; }
 
 .form {
     background: #111827;
@@ -105,9 +84,7 @@ header p {
     box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
-.form h2 {
-    margin-bottom: 15px;
-}
+.form h2 { margin-bottom: 15px; }
 
 label {
     display: block;
@@ -116,8 +93,7 @@ label {
     font-size: 14px;
 }
 
-input,
-textarea {
+input, textarea {
     width: 100%;
     padding: 13px;
     background: #1f2937;
@@ -126,16 +102,8 @@ textarea {
     border-radius: 12px;
     outline: none;
 }
-
-textarea {
-    min-height: 90px;
-    resize: vertical;
-}
-
-input:focus,
-textarea:focus {
-    border-color: #60a5fa;
-}
+textarea { min-height: 90px; resize: vertical; }
+input:focus, textarea:focus { border-color: #60a5fa; }
 
 button {
     background: #2563eb;
@@ -147,39 +115,14 @@ button {
     font-weight: 600;
     margin-top: 8px;
 }
-
-button:hover {
-    background: #1d4ed8;
-}
-
-button.secondary {
-    background: #374151;
-}
-
-button.secondary:hover {
-    background: #4b5563;
-}
-
-button.danger {
-    background: #dc2626;
-}
-
-button.danger:hover {
-    background: #b91c1c;
-}
-
-button.success {
-    background: #16a34a;
-}
-
-button.success:hover {
-    background: #15803d;
-}
-
-button:disabled {
-    background: #64748b;
-    cursor: not-allowed;
-}
+button:hover { background: #1d4ed8; }
+button.secondary { background: #374151; }
+button.secondary:hover { background: #4b5563; }
+button.danger { background: #dc2626; }
+button.danger:hover { background: #b91c1c; }
+button.success { background: #16a34a; }
+button.success:hover { background: #15803d; }
+button:disabled { background: #64748b; cursor: not-allowed; }
 
 .grid {
     display: grid;
@@ -213,145 +156,50 @@ button:disabled {
     font-size: 48px;
 }
 
-.content {
-    padding: 20px;
-    flex: 1;
-}
+.content { padding: 20px; flex: 1; }
+.task-title { font-size: 22px; margin-bottom: 8px; }
+.description { color: #cbd5e1; margin-bottom: 14px; white-space: pre-wrap; }
+.progress-row { display: flex; justify-content: space-between; align-items: center; margin: 14px 0 8px; color: #e5e7eb; }
+.progress { height: 10px; background: #1f2937; border-radius: 999px; overflow: hidden; margin-bottom: 15px; }
+.progress-fill { height: 100%; background: #22c55e; width: 0%; }
+.full .progress-fill { background: #ef4444; }
+.people { margin-top: 10px; }
+.person { background: #1f2937; padding: 10px; border-radius: 12px; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.person-name { word-break: break-word; }
+.badge { padding: 4px 8px; border-radius: 999px; font-size: 12px; white-space: nowrap; }
+.badge.waiting { background: #92400e; color: #fde68a; }
+.badge.done { background: #14532d; color: #bbf7d0; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.status-message { margin-top: 10px; color: #cbd5e1; font-size: 14px; }
+.empty { text-align: center; color: #94a3b8; padding: 40px; background: #111827; border-radius: 18px; }
+.loader { text-align: center; color: #cbd5e1; padding: 30px; }
+.top-actions { display: flex; justify-content: flex-end; margin-bottom: 15px; }
 
-.task-title {
-    font-size: 22px;
-    margin-bottom: 8px;
-}
-
-.description {
-    color: #cbd5e1;
-    margin-bottom: 14px;
-    white-space: pre-wrap;
-}
-
-.progress-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 14px 0 8px;
-    color: #e5e7eb;
-}
-
-.progress {
-    height: 10px;
-    background: #1f2937;
-    border-radius: 999px;
-    overflow: hidden;
-    margin-bottom: 15px;
-}
-
-.progress-fill {
-    height: 100%;
-    background: #22c55e;
-    width: 0%;
-}
-
-.full .progress-fill {
-    background: #ef4444;
-}
-
-.people {
-    margin-top: 10px;
-}
-
-.person {
-    background: #1f2937;
-    padding: 10px;
+/* DEBUG BOKS DESIGN */
+#debugTerminal {
+    background: #000000;
+    color: #a7f3d0;
+    font-family: monospace;
+    font-size: 13px;
+    padding: 15px;
     border-radius: 12px;
-    margin-top: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
+    margin-bottom: 24px;
+    height: 200px;
+    overflow-y: auto;
+    border: 1px solid #374151;
 }
-
-.person-name {
-    word-break: break-word;
-}
-
-.badge {
-    padding: 4px 8px;
-    border-radius: 999px;
-    font-size: 12px;
-    white-space: nowrap;
-}
-
-.badge.waiting {
-    background: #92400e;
-    color: #fde68a;
-}
-
-.badge.done {
-    background: #14532d;
-    color: #bbf7d0;
-}
-
-.actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 16px;
-}
-
-.status-message {
-    margin-top: 10px;
-    color: #cbd5e1;
-    font-size: 14px;
-}
-
-.empty {
-    text-align: center;
-    color: #94a3b8;
-    padding: 40px;
-    background: #111827;
-    border-radius: 18px;
-}
-
-.loader {
-    text-align: center;
-    color: #cbd5e1;
-    padding: 30px;
-}
-
-.top-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 15px;
-}
+.debug-error { color: #fca5a5; font-weight: bold; }
+.debug-success { color: #34d399; }
+.debug-time { color: #6b7280; margin-right: 8px; }
 
 @media (max-width: 700px) {
-    header {
-        padding: 32px 16px;
-    }
-
-    header h1 {
-        font-size: 30px;
-    }
-
-    .container {
-        padding: 14px;
-    }
-
-    .grid {
-        grid-template-columns: 1fr;
-    }
-
-    .card-img {
-        height: 210px;
-    }
-
-    button {
-        width: 100%;
-    }
-
-    .actions {
-        flex-direction: column;
-    }
+    header { padding: 32px 16px; }
+    header h1 { font-size: 30px; }
+    .container { padding: 14px; }
+    .grid { grid-template-columns: 1fr; }
+    .card-img { height: 210px; }
+    button { width: 100%; }
+    .actions { flex-direction: column; }
 }
 </style>
 </head>
@@ -362,95 +210,58 @@ button:disabled {
     <div class="login-box">
         <h1>🔒 FIXDAY</h1>
         <p>Indtast adgangskode for at fortsætte</p>
-
         <input id="passwordInput" type="password" placeholder="Adgangskode">
-
         <button id="loginBtn">Åbn FIXDAY</button>
-
-        <p id="loginError" style="color:#fca5a5;margin-top:15px;display:none;">
-            Forkert adgangskode
-        </p>
+        <p id="loginError" style="color:#fca5a5;margin-top:15px;display:none;">Forkert adgangskode</p>
     </div>
 </div>
 
 <div id="app" class="hidden">
-
     <header>
         <h1>🔧 FIXDAY</h1>
         <p>Team opgaver, billeder og tilmelding</p>
     </header>
 
     <div class="container">
-
         <div class="top-actions">
             <button id="logoutBtn" class="secondary">Log ud</button>
         </div>
 
         <div class="dashboard">
-            <div class="stat">
-                <h2 id="taskCount">0</h2>
-                <p>Opgaver</p>
-            </div>
+            <div class="stat"><h2 id="taskCount">0</h2><p>Opgaver</p></div>
+            <div class="stat"><h2 id="participantCount">0</h2><p>Tilmeldinger</p></div>
+        </div>
 
-            <div class="stat">
-                <h2 id="participantCount">0</h2>
-                <p>Tilmeldinger</p>
-            </div>
+        <!-- FEJLSØGNINGS TERMINAL -->
+        <div id="debugTerminal">
+            <div><span class="debug-time">---</span> Klar til fejlsøgning. Venter på handling...</div>
         </div>
 
         <div class="form">
             <h2>➕ Opret ny opgave</h2>
-
             <label>Opgavenavn</label>
             <input id="taskName" placeholder="Fx Ryd depot, mal væg, flyt borde">
-
             <label>Beskrivelse</label>
             <textarea id="taskDescription" placeholder="Skriv hvad der skal laves"></textarea>
-
             <label>Max antal personer</label>
             <input id="taskMax" type="number" value="1" min="1">
-
             <label>Billede til opgaven</label>
             <input id="taskImage" type="file" accept="image/*">
-
+            
             <button id="createTaskBtn">Opret opgave</button>
-
             <div id="createStatus" class="status-message"></div>
         </div>
 
         <div id="taskList" class="grid">
             <div class="loader">Indlæser opgaver...</div>
         </div>
-
     </div>
-
 </div>
 
 <script type="module">
-import { initializeApp } 
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-
-import {
-    getFirestore,
-    collection,
-    addDoc,
-    doc,
-    updateDoc,
-    deleteDoc,
-    onSnapshot,
-    serverTimestamp,
-    runTransaction
-}
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-
-import {
-    getStorage,
-    ref,
-    uploadBytes,
-    uploadString, // TILFØJET TIL KOMPRIMERING
-    getDownloadURL
-}
-from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, serverTimestamp, runTransaction } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+import { getStorage, ref, uploadString, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDeKIZcW1Mvi4lYvaKRMOWdKk3ikFXwEAU",
@@ -463,11 +274,9 @@ const firebaseConfig = {
 };
 
 const PASSWORD = "A2026";
-
 const appFirebase = initializeApp(firebaseConfig);
 const db = getFirestore(appFirebase);
 const storage = getStorage(appFirebase);
-
 let allTasks = [];
 
 const loginScreen = document.getElementById("loginScreen");
@@ -485,6 +294,16 @@ const createTaskBtn = document.getElementById("createTaskBtn");
 const createStatus = document.getElementById("createStatus");
 const taskList = document.getElementById("taskList");
 
+// --- FEJLSØGNINGS FUNKTION ---
+const debugTerminal = document.getElementById("debugTerminal");
+function logDebug(message, isError = false) {
+    const time = new Date().toLocaleTimeString('da-DK');
+    let cssClass = isError ? "debug-error" : "debug-success";
+    debugTerminal.innerHTML += `<div><span class="debug-time">[${time}]</span> <span class="${cssClass}">${message}</span></div>`;
+    debugTerminal.scrollTop = debugTerminal.scrollHeight; // Scroll altid til bunden
+    console.log(`[DEBUG] ${message}`);
+}
+
 function checkLogin() {
     if (sessionStorage.getItem("fixday_access") === "ok") {
         loginScreen.classList.add("hidden");
@@ -494,22 +313,11 @@ function checkLogin() {
 }
 
 loginBtn.addEventListener("click", login);
-
-passwordInput.addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-        login();
-    }
-});
-
-logoutBtn.addEventListener("click", function() {
-    sessionStorage.removeItem("fixday_access");
-    location.reload();
-});
+passwordInput.addEventListener("keydown", function(event) { if (event.key === "Enter") login(); });
+logoutBtn.addEventListener("click", function() { sessionStorage.removeItem("fixday_access"); location.reload(); });
 
 function login() {
-    const value = passwordInput.value.trim();
-
-    if (value === PASSWORD) {
+    if (passwordInput.value.trim() === PASSWORD) {
         sessionStorage.setItem("fixday_access", "ok");
         loginScreen.classList.add("hidden");
         app.classList.remove("hidden");
@@ -522,111 +330,109 @@ function login() {
 }
 
 let appStarted = false;
-
 function startApp() {
     if (appStarted) return;
     appStarted = true;
-
+    
+    logDebug("App startet. Opretter forbindelse til Firestore...");
     createTaskBtn.addEventListener("click", createTask);
 
-    onSnapshot(
-        collection(db, "tasks"),
-        function(snapshot) {
-            allTasks = snapshot.docs.map(function(documentItem) {
-                return {
-                    id: documentItem.id,
-                    ...documentItem.data()
-                };
-            });
-
-            allTasks.sort(function(a, b) {
-                const aTime = a.createdAt && a.createdAt.seconds ? a.createdAt.seconds : 0;
-                const bTime = b.createdAt && b.createdAt.seconds ? b.createdAt.seconds : 0;
-                return bTime - aTime;
-            });
-
+    onSnapshot(collection(db, "tasks"), 
+        (snapshot) => {
+            logDebug(`Hentede ${snapshot.docs.length} opgaver fra databasen.`);
+            allTasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            allTasks.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
             renderTasks();
         },
-        function(error) {
-            console.error(error);
-            taskList.innerHTML = `
-                <div class="empty">
-                    Kunne ikke hente opgaver fra Firebase.
-                    <br><br>
-                    Tjek Firestore Rules.
-                </div>
-            `;
+        (error) => {
+            logDebug(`Fejl ved hentning af opgaver: ${error.message} (Kode: ${error.code})`, true);
+            taskList.innerHTML = `<div class="empty debug-error">Kunne ikke hente opgaver. Tjek Firestore rettigheder!</div>`;
         }
     );
 }
 
-// TILFØJET: Hjælpefunktion til at komprimere billedet lokalt i browseren
+// BILLEDKOMPRIMERING MED DEBUG OG TIMEOUT
 function compressImage(file, maxWidth = 1000, quality = 0.7) {
     return new Promise((resolve, reject) => {
+        logDebug(`Starter komprimering af fil: ${file.name} (${(file.size / 1024).toFixed(0)} KB)`);
+        
+        // Timeout hvis browseren fryser på et ukendt format (f.eks. .avif)
+        const timeout = setTimeout(() => {
+            reject(new Error("Browseren frøs under komprimering. Prøv et andet filformat (JPG/PNG)."));
+        }, 8000);
+
         const reader = new FileReader();
         reader.readAsDataURL(file);
+        
         reader.onload = (event) => {
             const img = new Image();
             img.src = event.target.result;
+            
             img.onload = () => {
-                let width = img.width;
-                let height = img.height;
+                clearTimeout(timeout);
+                logDebug("Billede indlæst i hukommelsen. Skalerer...");
+                let width = img.width, height = img.height;
                 if (width > maxWidth) {
                     height = Math.round((height * maxWidth) / width);
                     width = maxWidth;
                 }
                 const canvas = document.createElement('canvas');
-                canvas.width = width;
-                canvas.height = height;
+                canvas.width = width; canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
                 resolve(canvas.toDataURL('image/jpeg', quality));
             };
-            img.onerror = (error) => reject(error);
+            img.onerror = () => {
+                clearTimeout(timeout);
+                reject(new Error("Browseren kan ikke tegne dette billedformat (prøv at konvertere til JPG)."));
+            };
         };
-        reader.onerror = (error) => reject(error);
+        reader.onerror = () => {
+            clearTimeout(timeout);
+            reject(new Error("Kunne ikke læse filen fra computeren."));
+        };
     });
 }
 
+// OPRET OPGAVE MED FULD DEBUGGING
 async function createTask() {
     const name = taskName.value.trim();
     const description = taskDescription.value.trim();
     const max = parseInt(taskMax.value) || 1;
     const file = taskImage.files[0];
 
-    if (!name) {
-        alert("Skriv et opgavenavn");
-        return;
-    }
-
-    if (max < 1) {
-        alert("Max antal personer skal være mindst 1");
-        return;
-    }
+    if (!name) { alert("Skriv et opgavenavn"); return; }
+    if (max < 1) { alert("Max antal personer skal være mindst 1"); return; }
 
     createTaskBtn.disabled = true;
-    createStatus.textContent = "Gemmer opgave...";
+    logDebug("--- Starter oprettelse af ny opgave ---");
 
     try {
         let imageUrl = "";
         let imagePath = "";
 
         if (file) {
-            createStatus.textContent = "Komprimerer og uploader billede...";
-
-            // 1. Komprimer billedet lynhurtigt
+            createStatus.textContent = "Komprimerer billede...";
             const compressedBase64 = await compressImage(file, 1000, 0.75);
+            logDebug("Komprimering lykkedes!");
 
-            // 2. Skab et filnavn
             const safeFileName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
             imagePath = "task-images/" + Date.now() + "-" + safeFileName + ".jpg";
             
-            // 3. Upload den komprimerede streng (uploadString i stedet for uploadBytes)
+            createStatus.textContent = "Uploader til Storage...";
+            logDebug(`Uploader til sti: ${imagePath}`);
+            
             const imageRef = ref(storage, imagePath);
             await uploadString(imageRef, compressedBase64, 'data_url');
+            logDebug("Upload til Storage lykkedes. Henter download link...");
+            
             imageUrl = await getDownloadURL(imageRef);
+            logDebug(`Download link hentet.`);
         }
 
+        createStatus.textContent = "Gemmer i database...";
+        logDebug("Gemmer opgavedata i Firestore 'tasks' kollektionen...");
+        
         await addDoc(collection(db, "tasks"), {
             name: name,
             description: description,
@@ -637,122 +443,70 @@ async function createTask() {
             createdAt: serverTimestamp()
         });
 
-        taskName.value = "";
-        taskDescription.value = "";
-        taskMax.value = "1";
-        taskImage.value = "";
-
+        logDebug("Opgave oprettet med succes i databasen!");
         createStatus.textContent = "Opgaven er oprettet ✅";
-
-        setTimeout(function() {
-            createStatus.textContent = "";
-        }, 2500);
+        
+        taskName.value = ""; taskDescription.value = ""; taskMax.value = "1"; taskImage.value = "";
+        setTimeout(() => createStatus.textContent = "", 2500);
 
     } catch (error) {
-        console.error(error);
-        alert("Kunne ikke oprette opgaven. Tjek Firebase Firestore og Storage regler.");
-        createStatus.textContent = "Fejl ved oprettelse";
+        // DET ER HER VI FANGER FEJLEN!
+        logDebug(`CRASH: ${error.message}`, true);
+        if (error.code) logDebug(`FIREBASE KODE: ${error.code}`, true);
+        
+        createStatus.textContent = "Fejl ved oprettelse! Se debug-boksen.";
+        createStatus.style.color = "#fca5a5";
     }
 
     createTaskBtn.disabled = false;
+    logDebug("--- Oprettelse afsluttet ---");
 }
 
 function renderTasks() {
     let totalParticipants = 0;
-
-    allTasks.forEach(function(task) {
-        totalParticipants += Array.isArray(task.people) ? task.people.length : 0;
-    });
-
+    allTasks.forEach(task => totalParticipants += Array.isArray(task.people) ? task.people.length : 0);
     document.getElementById("taskCount").textContent = allTasks.length;
     document.getElementById("participantCount").textContent = totalParticipants;
 
     if (allTasks.length === 0) {
-        taskList.innerHTML = `
-            <div class="empty">
-                Ingen opgaver endnu.
-                <br>
-                Opret den første opgave ovenfor.
-            </div>
-        `;
+        taskList.innerHTML = `<div class="empty">Ingen opgaver endnu.<br>Opret den første opgave ovenfor.</div>`;
         return;
     }
 
-    taskList.innerHTML = allTasks.map(function(task) {
+    taskList.innerHTML = allTasks.map(task => {
         const people = Array.isArray(task.people) ? task.people : [];
         const max = task.max || 1;
         const percent = Math.min(100, Math.round((people.length / max) * 100));
         const isFull = people.length >= max;
+        const imageHtml = task.imageUrl ? `<img src="${escapeHtml(task.imageUrl)}" class="card-img" alt="Opgavebillede">` : `<div class="no-img">📷</div>`;
 
-        const imageHtml = task.imageUrl
-            ? `<img src="${escapeHtml(task.imageUrl)}" class="card-img" alt="Opgavebillede">`
-            : `<div class="no-img">📷</div>`;
-
-        const peopleHtml = people.length
-            ? people.map(function(person, index) {
-                const done = person.done === true;
-                return `
-                    <div class="person">
-                        <span class="person-name">
-                            ${done ? "✅" : "⏳"} ${escapeHtml(person.name)}
-                        </span>
-
-                        <span>
-                            <span class="badge ${done ? "done" : "waiting"}">
-                                ${done ? "Udført" : "I gang"}
-                            </span>
-                        </span>
-                    </div>
-
-                    <div class="actions">
-                        ${!done ? `
-                            <button data-action="done" data-task-id="${task.id}" data-person-index="${index}" class="success">
-                                Markér udført
-                            </button>
-                        ` : ""}
-
-                        <button data-action="remove-person" data-task-id="${task.id}" data-person-index="${index}" class="danger">
-                            Fjern person
-                        </button>
-                    </div>
-                `;
-            }).join("")
-            : `<p style="color:#94a3b8;margin-top:10px;">Ingen tilmeldte endnu</p>`;
+        const peopleHtml = people.length ? people.map((person, index) => {
+            const done = person.done === true;
+            return `
+                <div class="person">
+                    <span class="person-name">${done ? "✅" : "⏳"} ${escapeHtml(person.name)}</span>
+                    <span><span class="badge ${done ? "done" : "waiting"}">${done ? "Udført" : "I gang"}</span></span>
+                </div>
+                <div class="actions">
+                    ${!done ? `<button data-action="done" data-task-id="${task.id}" data-person-index="${index}" class="success">Markér udført</button>` : ""}
+                    <button data-action="remove-person" data-task-id="${task.id}" data-person-index="${index}" class="danger">Fjern person</button>
+                </div>
+            `;
+        }).join("") : `<p style="color:#94a3b8;margin-top:10px;">Ingen tilmeldte endnu</p>`;
 
         return `
             <div class="card ${isFull ? "full" : ""}">
                 ${imageHtml}
-
                 <div class="content">
                     <h3 class="task-title">${escapeHtml(task.name)}</h3>
-
                     <p class="description">${escapeHtml(task.description || "")}</p>
-
-                    <div class="progress-row">
-                        <span>Deltagere</span>
-                        <strong>${people.length}/${max}</strong>
-                    </div>
-
-                    <div class="progress">
-                        <div class="progress-fill" style="width:${percent}%"></div>
-                    </div>
-
-                    <div class="people">
-                        ${peopleHtml}
-                    </div>
-
+                    <div class="progress-row"><span>Deltagere</span><strong>${people.length}/${max}</strong></div>
+                    <div class="progress"><div class="progress-fill" style="width:${percent}%"></div></div>
+                    <div class="people">${peopleHtml}</div>
                     <div class="actions">
-                        <button data-action="join" data-task-id="${task.id}" class="success" ${isFull ? "disabled" : ""}>
-                            ${isFull ? "Opgaven er fuld" : "Jeg kommer"}
-                        </button>
-
-                        <button data-action="edit" data-task-id="${task.id}" class="secondary">
-                            Rediger
-                        </button>
-
-                        <button data-action="delete" data-task-id="${task.id}" class="danger">
-                            Slet
-                        </button>
+                        <button data-action="join" data-task-id="${task.id}" class="success" ${isFull ? "disabled" : ""}>${isFull ? "Opgaven er fuld" : "Jeg kommer"}</button>
+                        <button data-action="edit" data-task-id="${task.id}" class="secondary">Rediger</button>
+                        <button data-action="delete" data-task-id="${task.id}" class="danger">Slet</button>
                     </div>
                 </div>
             </div>
@@ -762,202 +516,75 @@ function renderTasks() {
 
 taskList.addEventListener("click", async function(event) {
     const button = event.target.closest("button");
-
     if (!button) return;
-
-    const action = button.dataset.action;
-    const taskId = button.dataset.taskId;
-    const personIndex = button.dataset.personIndex;
-
+    const { action, taskId, personIndex } = button.dataset;
     if (!action || !taskId) return;
 
-    if (action === "join") {
-        await joinTask(taskId);
-    }
-
-    if (action === "edit") {
-        await editTask(taskId);
-    }
-
-    if (action === "delete") {
-        await deleteTask(taskId);
-    }
-
-    if (action === "done") {
-        await completePerson(taskId, parseInt(personIndex));
-    }
-
-    if (action === "remove-person") {
-        await removePerson(taskId, parseInt(personIndex));
-    }
+    if (action === "join") await joinTask(taskId);
+    if (action === "edit") await editTask(taskId);
+    if (action === "delete") await deleteTask(taskId);
+    if (action === "done") await completePerson(taskId, parseInt(personIndex));
+    if (action === "remove-person") await removePerson(taskId, parseInt(personIndex));
 });
 
+// For at holde filen overskuelig er joinTask, editTask osv. minimeret her, men bevaret.
 async function joinTask(taskId) {
     const personName = prompt("Skriv dit navn");
-
     if (!personName || !personName.trim()) return;
-
-    const cleanName = personName.trim();
-
     try {
-        const taskRef = doc(db, "tasks", taskId);
-
-        await runTransaction(db, async function(transaction) {
+        await runTransaction(db, async (transaction) => {
+            const taskRef = doc(db, "tasks", taskId);
             const taskSnap = await transaction.get(taskRef);
-
-            if (!taskSnap.exists()) {
-                throw new Error("Opgaven findes ikke længere");
-            }
-
+            if (!taskSnap.exists()) throw new Error("Opgaven findes ikke længere");
             const task = taskSnap.data();
             const people = Array.isArray(task.people) ? task.people : [];
-            const max = task.max || 1;
-
-            const alreadyJoined = people.some(function(person) {
-                return person.name.toLowerCase() === cleanName.toLowerCase();
-            });
-
-            if (alreadyJoined) {
-                throw new Error("Du er allerede tilmeldt");
-            }
-
-            if (people.length >= max) {
-                throw new Error("Opgaven er fuld");
-            }
-
-            people.push({
-                name: cleanName,
-                done: false
-            });
-
-            transaction.update(taskRef, {
-                people: people
-            });
+            if (people.some(p => p.name.toLowerCase() === personName.trim().toLowerCase())) throw new Error("Du er allerede tilmeldt");
+            if (people.length >= (task.max || 1)) throw new Error("Opgaven er fuld");
+            people.push({ name: personName.trim(), done: false });
+            transaction.update(taskRef, { people });
         });
-
-    } catch (error) {
-        alert(error.message || "Kunne ikke tilmelde dig");
-    }
+    } catch (error) { alert(error.message || "Fejl"); }
 }
 
 async function editTask(taskId) {
-    const task = allTasks.find(function(item) {
-        return item.id === taskId;
-    });
-
+    const task = allTasks.find(item => item.id === taskId);
     if (!task) return;
-
-    const newName = prompt("Ret opgavenavn", task.name || "");
-    if (newName === null) return;
-
-    const newDescription = prompt("Ret beskrivelse", task.description || "");
-    if (newDescription === null) return;
-
-    const newMaxText = prompt("Ret max antal personer", task.max || 1);
-    if (newMaxText === null) return;
-
+    const newName = prompt("Ret opgavenavn", task.name || ""); if (newName === null) return;
+    const newDesc = prompt("Ret beskrivelse", task.description || ""); if (newDesc === null) return;
+    const newMaxText = prompt("Ret max antal personer", task.max || 1); if (newMaxText === null) return;
     const newMax = parseInt(newMaxText) || 1;
-
-    if (newMax < 1) {
-        alert("Max antal skal være mindst 1");
-        return;
-    }
-
-    const people = Array.isArray(task.people) ? task.people : [];
-
-    if (newMax < people.length) {
-        alert("Du kan ikke sætte max lavere end antal personer, der allerede er tilmeldt.");
-        return;
-    }
-
-    try {
-        await updateDoc(doc(db, "tasks", taskId), {
-            name: newName.trim() || task.name,
-            description: newDescription.trim(),
-            max: newMax
-        });
-    } catch (error) {
-        console.error(error);
-        alert("Kunne ikke redigere opgaven");
-    }
+    if (newMax < (task.people?.length || 0)) { alert("Max kan ikke være lavere end antal tilmeldte."); return; }
+    try { await updateDoc(doc(db, "tasks", taskId), { name: newName.trim() || task.name, description: newDesc.trim(), max: newMax }); }
+    catch (e) { logDebug("Fejl ved redigering: " + e.message, true); }
 }
 
 async function deleteTask(taskId) {
-    const task = allTasks.find(function(item) {
-        return item.id === taskId;
-    });
-
-    if (!task) return;
-
-    const yes = confirm("Vil du slette opgaven: " + task.name + "?");
-
-    if (!yes) return;
-
-    try {
-        await deleteDoc(doc(db, "tasks", taskId));
-    } catch (error) {
-        console.error(error);
-        alert("Kunne ikke slette opgaven");
-    }
+    const task = allTasks.find(item => item.id === taskId);
+    if (!task || !confirm("Slet: " + task.name + "?")) return;
+    try { await deleteDoc(doc(db, "tasks", taskId)); } 
+    catch (e) { logDebug("Fejl ved sletning: " + e.message, true); }
 }
 
 async function completePerson(taskId, personIndex) {
-    const task = allTasks.find(function(item) {
-        return item.id === taskId;
-    });
-
-    if (!task) return;
-
-    const people = Array.isArray(task.people) ? [...task.people] : [];
-
-    if (!people[personIndex]) return;
-
+    const task = allTasks.find(item => item.id === taskId);
+    if (!task || !task.people[personIndex]) return;
+    const people = [...task.people];
     people[personIndex].done = true;
-
-    try {
-        await updateDoc(doc(db, "tasks", taskId), {
-            people: people
-        });
-    } catch (error) {
-        console.error(error);
-        alert("Kunne ikke markere som udført");
-    }
+    try { await updateDoc(doc(db, "tasks", taskId), { people }); }
+    catch (e) { logDebug("Fejl ved opdatering: " + e.message, true); }
 }
 
 async function removePerson(taskId, personIndex) {
-    const task = allTasks.find(function(item) {
-        return item.id === taskId;
-    });
-
-    if (!task) return;
-
-    const people = Array.isArray(task.people) ? [...task.people] : [];
-
-    if (!people[personIndex]) return;
-
-    const yes = confirm("Vil du fjerne " + people[personIndex].name + " fra opgaven?");
-
-    if (!yes) return;
-
+    const task = allTasks.find(item => item.id === taskId);
+    if (!task || !task.people[personIndex] || !confirm("Fjern " + task.people[personIndex].name + "?")) return;
+    const people = [...task.people];
     people.splice(personIndex, 1);
-
-    try {
-        await updateDoc(doc(db, "tasks", taskId), {
-            people: people
-        });
-    } catch (error) {
-        console.error(error);
-        alert("Kunne ikke fjerne personen");
-    }
+    try { await updateDoc(doc(db, "tasks", taskId), { people }); }
+    catch (e) { logDebug("Fejl ved fjernelse: " + e.message, true); }
 }
 
 function escapeHtml(value) {
-    return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
 }
 
 checkLogin();
