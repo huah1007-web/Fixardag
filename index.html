@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="sv">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIXDAY Team Opgaver</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<title>FIXDAY Teamuppgifter</title>
 
 <style>
 * {
@@ -13,23 +17,46 @@
     font-family: "Segoe UI", Arial, sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
 body {
     background: #0f172a;
     color: #ffffff;
     min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+button,
+input[type="file"] {
+    touch-action: manipulation;
 }
 
 .hidden {
     display: none !important;
 }
 
+/* LOGIN */
 .login-screen {
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #0f172a, #1e3a8a);
-    padding: 20px;
+    padding: max(20px, env(safe-area-inset-top))
+             max(20px, env(safe-area-inset-right))
+             max(20px, env(safe-area-inset-bottom))
+             max(20px, env(safe-area-inset-left));
 }
 
 .login-box {
@@ -39,28 +66,57 @@ body {
     width: 100%;
     max-width: 420px;
     text-align: center;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.login-box h1 { margin-bottom: 10px; }
-.login-box p { color: #cbd5e1; margin-bottom: 20px; }
-.login-box input { text-align: center; font-size: 18px; }
+.login-box h1 {
+    margin-bottom: 10px;
+}
 
+.login-box p {
+    color: #cbd5e1;
+    margin-bottom: 20px;
+}
+
+.login-box input {
+    text-align: center;
+    font-size: 18px;
+}
+
+.login-box button {
+    width: 100%;
+}
+
+/* HEADER */
 header {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
     padding: 45px 20px;
+    padding-top: max(45px, calc(25px + env(safe-area-inset-top)));
     text-align: center;
 }
 
-header h1 { font-size: 38px; margin-bottom: 8px; }
-header p { color: #dbeafe; }
+header h1 {
+    font-size: 38px;
+    margin-bottom: 8px;
+}
 
+header p {
+    color: #dbeafe;
+}
+
+/* MAIN CONTAINER */
 .container {
+    width: 100%;
     max-width: 1200px;
     margin: auto;
     padding: 20px;
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+    padding-bottom: max(30px, env(safe-area-inset-bottom));
 }
 
+/* DASHBOARD */
 .dashboard {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -73,29 +129,40 @@ header p { color: #dbeafe; }
     padding: 20px;
     border-radius: 18px;
     text-align: center;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.stat h2 { font-size: 34px; color: #60a5fa; }
+.stat h2 {
+    font-size: 34px;
+    color: #60a5fa;
+}
 
+/* FORM */
 .form {
     background: #111827;
     padding: 22px;
     border-radius: 18px;
     margin-bottom: 24px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-.form h2 { margin-bottom: 15px; }
+.form h2 {
+    margin-bottom: 15px;
+}
 
 label {
     display: block;
-    margin: 10px 0 6px;
+    margin: 14px 0 6px;
     color: #cbd5e1;
     font-size: 14px;
+    font-weight: 600;
 }
 
-input, textarea {
+input,
+textarea {
+    display: block;
     width: 100%;
     padding: 13px;
     background: #1f2937;
@@ -103,47 +170,120 @@ input, textarea {
     border: 1px solid #334155;
     border-radius: 12px;
     outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-textarea { min-height: 90px; resize: vertical; }
-input:focus, textarea:focus { border-color: #60a5fa; }
+input::placeholder,
+textarea::placeholder {
+    color: #94a3b8;
+    opacity: 1;
+}
 
+input[type="file"] {
+    min-height: 50px;
+    padding: 10px;
+}
+
+input[type="file"]::file-selector-button {
+    background: #334155;
+    color: #ffffff;
+    border: none;
+    border-radius: 9px;
+    padding: 9px 12px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.18);
+}
+
+/* BUTTONS */
 button {
     background: #2563eb;
     color: #ffffff;
     border: none;
     padding: 12px 18px;
+    min-height: 44px;
     border-radius: 12px;
     cursor: pointer;
     font-weight: 600;
     margin-top: 8px;
+    transition: background 0.2s, transform 0.1s, opacity 0.2s;
+    -webkit-tap-highlight-color: transparent;
 }
 
-button:hover { background: #1d4ed8; }
-button.secondary { background: #374151; }
-button.secondary:hover { background: #4b5563; }
-button.danger { background: #dc2626; }
-button.danger:hover { background: #b91c1c; }
-button.success { background: #16a34a; }
-button.success:hover { background: #15803d; }
-button:disabled { background: #64748b; cursor: not-allowed; }
+button:hover {
+    background: #1d4ed8;
+}
 
+button:active {
+    transform: scale(0.98);
+}
+
+button:focus-visible {
+    outline: 3px solid rgba(147, 197, 253, 0.8);
+    outline-offset: 2px;
+}
+
+button.secondary {
+    background: #374151;
+}
+
+button.secondary:hover {
+    background: #4b5563;
+}
+
+button.danger {
+    background: #dc2626;
+}
+
+button.danger:hover {
+    background: #b91c1c;
+}
+
+button.success {
+    background: #16a34a;
+}
+
+button.success:hover {
+    background: #15803d;
+}
+
+button:disabled {
+    background: #64748b;
+    cursor: not-allowed;
+    opacity: 0.8;
+    transform: none;
+}
+
+/* TASK GRID */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(310px, 100%), 1fr));
     gap: 20px;
 }
 
 .card {
+    min-width: 0;
     background: #111827;
     border-radius: 22px;
     overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
     display: flex;
     flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .card-img {
+    display: block;
     width: 100%;
     height: 230px;
     object-fit: cover;
@@ -160,35 +300,151 @@ button:disabled { background: #64748b; cursor: not-allowed; }
     font-size: 48px;
 }
 
-.content { padding: 20px; flex: 1; }
-.task-title { font-size: 22px; margin-bottom: 8px; }
-.description { color: #cbd5e1; margin-bottom: 14px; white-space: pre-wrap; }
-.progress-row { display: flex; justify-content: space-between; align-items: center; margin: 14px 0 8px; color: #e5e7eb; }
-.progress { height: 10px; background: #1f2937; border-radius: 999px; overflow: hidden; margin-bottom: 15px; }
-.progress-fill { height: 100%; background: #22c55e; width: 0%; }
-.full .progress-fill { background: #ef4444; }
-.people { margin-top: 10px; }
-.person { background: #1f2937; padding: 10px; border-radius: 12px; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.person-name { word-break: break-word; }
-.badge { padding: 4px 8px; border-radius: 999px; font-size: 12px; white-space: nowrap; }
-.badge.waiting { background: #92400e; color: #fde68a; }
-.badge.done { background: #14532d; color: #bbf7d0; }
-.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-.status-message { margin-top: 10px; color: #cbd5e1; font-size: 14px; font-weight: 500; }
-.empty { text-align: center; color: #94a3b8; padding: 40px; background: #111827; border-radius: 18px; }
-.loader { text-align: center; color: #cbd5e1; padding: 30px; }
-.top-actions { display: flex; justify-content: flex-end; margin-bottom: 15px; }
+.content {
+    padding: 20px;
+    flex: 1;
+    min-width: 0;
+}
 
-/* MODAL DESIGN */
+.task-title {
+    font-size: 22px;
+    margin-bottom: 8px;
+    overflow-wrap: anywhere;
+}
+
+.description {
+    color: #cbd5e1;
+    margin-bottom: 14px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+}
+
+.progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 14px 0 8px;
+    color: #e5e7eb;
+}
+
+.progress {
+    height: 10px;
+    background: #1f2937;
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #22c55e;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+.full .progress-fill {
+    background: #ef4444;
+}
+
+.people {
+    margin-top: 10px;
+}
+
+.person {
+    background: #1f2937;
+    padding: 10px;
+    border-radius: 12px;
+    margin-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.person-name {
+    min-width: 0;
+    word-break: break-word;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.badge.waiting {
+    background: #92400e;
+    color: #fde68a;
+}
+
+.badge.done {
+    background: #14532d;
+    color: #bbf7d0;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.actions button {
+    margin-top: 0;
+}
+
+.person-actions {
+    margin-top: 8px;
+    margin-bottom: 14px;
+}
+
+.status-message {
+    min-height: 20px;
+    margin-top: 10px;
+    color: #cbd5e1;
+    font-size: 14px;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+}
+
+.empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #94a3b8;
+    padding: 40px 20px;
+    background: #111827;
+    border-radius: 18px;
+}
+
+.loader {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #cbd5e1;
+    padding: 30px;
+}
+
+.top-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+/* MODAL */
 .modal-overlay {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    inset: 0;
     background: rgba(0, 0, 0, 0.85);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 100;
-    padding: 20px;
+    padding: max(20px, env(safe-area-inset-top))
+             max(20px, env(safe-area-inset-right))
+             max(20px, env(safe-area-inset-bottom))
+             max(20px, env(safe-area-inset-left));
 }
 
 .modal-content {
@@ -198,12 +454,25 @@ button:disabled { background: #64748b; cursor: not-allowed; }
     width: 100%;
     max-width: 500px;
     max-height: 90vh;
+    max-height: 90dvh;
     overflow-y: auto;
+    overscroll-behavior: contain;
     border: 1px solid #374151;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
 }
 
 .modal-content h2 {
     margin-bottom: 20px;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-actions button {
+    flex: 1;
 }
 
 .image-preview-box {
@@ -215,21 +484,237 @@ button:disabled { background: #64748b; cursor: not-allowed; }
 }
 
 .image-preview-box img {
+    display: block;
+    width: auto;
     max-width: 100%;
     max-height: 200px;
+    margin: 0 auto;
     border-radius: 8px;
     object-fit: cover;
 }
 
+/* TABLET */
+@media (max-width: 900px) {
+    header {
+        padding: 34px 18px;
+    }
+
+    .container {
+        padding: 16px;
+    }
+}
+
+/* MOBILE */
 @media (max-width: 700px) {
-    header { padding: 32px 16px; }
-    header h1 { font-size: 30px; }
-    .container { padding: 14px; }
-    .grid { grid-template-columns: 1fr; }
-    .card-img { height: 210px; }
-    button { width: 100%; }
-    .actions { flex-direction: column; }
-    .modal-content { padding: 15px; }
+    body {
+        font-size: 16px;
+    }
+
+    .login-screen {
+        align-items: center;
+        padding: 14px;
+    }
+
+    .login-box {
+        padding: 24px 18px;
+        border-radius: 18px;
+    }
+
+    .login-box h1 {
+        font-size: 28px;
+    }
+
+    header {
+        padding: 24px 15px;
+        padding-top: max(24px, calc(14px + env(safe-area-inset-top)));
+    }
+
+    header h1 {
+        font-size: 28px;
+    }
+
+    header p {
+        font-size: 14px;
+    }
+
+    .container {
+        padding: 12px;
+        padding-left: max(12px, env(safe-area-inset-left));
+        padding-right: max(12px, env(safe-area-inset-right));
+        padding-bottom: max(24px, env(safe-area-inset-bottom));
+    }
+
+    .dashboard {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .stat {
+        padding: 15px 10px;
+        border-radius: 15px;
+    }
+
+    .stat h2 {
+        font-size: 26px;
+    }
+
+    .stat p {
+        font-size: 14px;
+        overflow-wrap: anywhere;
+    }
+
+    .form {
+        padding: 18px 15px;
+        border-radius: 16px;
+    }
+
+    .form h2 {
+        font-size: 21px;
+    }
+
+    input,
+    textarea {
+        font-size: 16px;
+        min-height: 48px;
+    }
+
+    textarea {
+        min-height: 110px;
+    }
+
+    .grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+
+    .card {
+        border-radius: 16px;
+    }
+
+    .card-img {
+        height: 200px;
+    }
+
+    .no-img {
+        height: 150px;
+    }
+
+    .content {
+        padding: 16px;
+    }
+
+    .task-title {
+        font-size: 21px;
+    }
+
+    .progress-row {
+        font-size: 14px;
+    }
+
+    .person {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px;
+    }
+
+    .actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    .actions button {
+        width: 100%;
+        min-height: 48px;
+    }
+
+    button {
+        min-height: 48px;
+        font-size: 16px;
+    }
+
+    .form > button {
+        width: 100%;
+    }
+
+    .top-actions {
+        justify-content: stretch;
+    }
+
+    .top-actions button {
+        width: 100%;
+    }
+
+    .modal-overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .modal-content {
+        max-width: none;
+        max-height: 94vh;
+        max-height: 94dvh;
+        padding: 20px 15px;
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+        border-radius: 20px 20px 0 0;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+    }
+
+    .modal-content h2 {
+        font-size: 22px;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .modal-actions button {
+        width: 100%;
+        flex: none;
+    }
+
+    .image-preview-box img {
+        max-height: 180px;
+    }
+
+    .empty {
+        padding: 32px 18px;
+    }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 380px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    header h1 {
+        font-size: 25px;
+    }
+
+    .form h2,
+    .modal-content h2 {
+        font-size: 20px;
+    }
+
+    .card-img {
+        height: 175px;
+    }
+}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+    }
 }
 </style>
 </head>
@@ -239,99 +724,207 @@ button:disabled { background: #64748b; cursor: not-allowed; }
 <div id="loginScreen" class="login-screen">
     <div class="login-box">
         <h1>🔒 FIXDAY</h1>
-        <p>Indtast adgangskode for at fortsætte</p>
-        <input id="passwordInput" type="password" placeholder="Adgangskode">
-        <button id="loginBtn">Åbn FIXDAY</button>
-        <p id="loginError" style="color:#fca5a5;margin-top:15px;display:none;">Forkert adgangskode</p>
+        <p>Ange lösenord för att fortsätta</p>
+
+        <label for="passwordInput" class="hidden">Lösenord</label>
+        <input
+            id="passwordInput"
+            type="password"
+            placeholder="Lösenord"
+            autocomplete="current-password"
+            enterkeyhint="go"
+        >
+
+        <button id="loginBtn" type="button">Öppna FIXDAY</button>
+
+        <p
+            id="loginError"
+            role="alert"
+            style="color:#fca5a5;margin-top:15px;margin-bottom:0;display:none;"
+        >
+            Fel lösenord
+        </p>
     </div>
 </div>
 
 <div id="app" class="hidden">
     <header>
         <h1>🔧 FIXDAY</h1>
-        <p>Team opgaver, billeder og tilmelding</p>
+        <p>Teamuppgifter, bilder och anmälningar</p>
     </header>
 
-    <div class="container">
+    <main class="container">
         <div class="top-actions">
-            <button id="logoutBtn" class="secondary">Log ud</button>
+            <button id="logoutBtn" type="button" class="secondary">
+                Logga ut
+            </button>
         </div>
 
-        <div class="dashboard">
+        <section class="dashboard" aria-label="Översikt">
             <div class="stat">
                 <h2 id="taskCount">0</h2>
-                <p>Opgaver</p>
+                <p>Uppgifter</p>
             </div>
+
             <div class="stat">
                 <h2 id="participantCount">0</h2>
-                <p>Tilmeldinger</p>
+                <p>Anmälningar</p>
             </div>
-        </div>
+        </section>
 
-        <div class="form">
-            <h2>➕ Opret ny opgave</h2>
+        <section class="form">
+            <h2>➕ Skapa ny uppgift</h2>
 
-            <label>Opgavenavn</label>
-            <input id="taskName" placeholder="Fx Ryd depot, mal væg, flyt borde">
+            <label for="taskName">Uppgiftens namn</label>
+            <input
+                id="taskName"
+                type="text"
+                placeholder="T.ex. städa förrådet, måla en vägg eller flytta bord"
+                autocomplete="off"
+            >
 
-            <label>Beskrivelse</label>
-            <textarea id="taskDescription" placeholder="Skriv hvad der skal laves"></textarea>
+            <label for="taskDescription">Beskrivning</label>
+            <textarea
+                id="taskDescription"
+                placeholder="Beskriv vad som ska göras"
+            ></textarea>
 
-            <label>Max antal personer</label>
-            <input id="taskMax" type="number" value="1" min="1">
+            <label for="taskMax">Max antal personer</label>
+            <input
+                id="taskMax"
+                type="number"
+                value="1"
+                min="1"
+                inputmode="numeric"
+            >
 
-            <label>Billede til opgaven</label>
-            <input id="taskImage" type="file" accept="image/*">
+            <label for="taskImage">Bild till uppgiften</label>
+            <input
+                id="taskImage"
+                type="file"
+                accept="image/*"
+            >
 
-            <button id="createTaskBtn">Opret opgave</button>
-            <div id="createStatus" class="status-message"></div>
-        </div>
+            <button id="createTaskBtn" type="button">
+                Skapa uppgift
+            </button>
 
-        <div id="taskList" class="grid">
-            <div class="loader">Indlæser opgaver...</div>
-        </div>
-    </div>
+            <div
+                id="createStatus"
+                class="status-message"
+                role="status"
+                aria-live="polite"
+            ></div>
+        </section>
+
+        <section id="taskList" class="grid" aria-live="polite">
+            <div class="loader">Laddar uppgifter...</div>
+        </section>
+    </main>
 </div>
 
-<!-- REDIGER OPGAVE MODAL -->
-<div id="editModal" class="modal-overlay hidden">
+<!-- MODAL FÖR REDIGERING AV UPPGIFT -->
+<div
+    id="editModal"
+    class="modal-overlay hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="editModalTitle"
+>
     <div class="modal-content">
-        <h2>✏️ Rediger opgave</h2>
-        
-        <label>Opgavenavn</label>
-        <input id="editTaskName" type="text">
-        
-        <label>Beskrivelse</label>
+        <h2 id="editModalTitle">✏️ Redigera uppgift</h2>
+
+        <label for="editTaskName">Uppgiftens namn</label>
+        <input id="editTaskName" type="text" autocomplete="off">
+
+        <label for="editTaskDescription">Beskrivning</label>
         <textarea id="editTaskDescription"></textarea>
-        
-        <label>Max antal personer</label>
-        <input id="editTaskMax" type="number" min="1">
-        
-        <!-- Vises kun hvis der findes et billede i forvejen -->
-        <div id="currentImageBox" class="image-preview-box" style="display: none;">
-            <p style="margin-bottom: 8px; font-size: 14px; color: #cbd5e1;">Nuværende billede:</p>
-            <img id="editTaskImagePreview" src="" alt="Nuværende">
-            <button id="removeImageBtn" class="danger" style="margin-top: 10px;">🗑️ Slet nuværende billede</button>
+
+        <label for="editTaskMax">Max antal personer</label>
+        <input
+            id="editTaskMax"
+            type="number"
+            min="1"
+            inputmode="numeric"
+        >
+
+        <div
+            id="currentImageBox"
+            class="image-preview-box"
+            style="display: none;"
+        >
+            <p style="margin-bottom:8px;font-size:14px;color:#cbd5e1;">
+                Nuvarande bild:
+            </p>
+
+            
+
+            <button
+                id="removeImageBtn"
+                type="button"
+                class="danger"
+                style="margin-top:10px;"
+            >
+                🗑️ Ta bort nuvarande bild
+            </button>
         </div>
 
-        <label style="margin-top: 15px;">Upload et nyt billede (erstatter det gamle)</label>
-        <input id="editTaskImage" type="file" accept="image/*">
+        <label for="editTaskImage" style="margin-top:15px;">
+            Ladda upp en ny bild (ersätter den gamla)
+        </label>
 
-        <div id="editStatus" class="status-message"></div>
+        <input
+            id="editTaskImage"
+            type="file"
+            accept="image/*"
+        >
 
-        <div style="display: flex; gap: 10px; margin-top: 20px;">
-            <button id="saveEditBtn" class="success" style="flex: 1;">Gem ændringer</button>
-            <button id="cancelEditBtn" class="secondary" style="flex: 1;">Annuller</button>
+        <div
+            id="editStatus"
+            class="status-message"
+            role="status"
+            aria-live="polite"
+        ></div>
+
+        <div class="modal-actions">
+            <button id="saveEditBtn" type="button" class="success">
+                Spara ändringar
+            </button>
+
+            <button id="cancelEditBtn" type="button" class="secondary">
+                Avbryt
+            </button>
         </div>
     </div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, serverTimestamp, runTransaction } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
-// VIGTIGT: deleteObject er tilføjet her, så vi kan rydde op i slettede billeder!
-import { getStorage, ref, uploadBytes, uploadString, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
 
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    doc,
+    updateDoc,
+    deleteDoc,
+    onSnapshot,
+    serverTimestamp,
+    runTransaction
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+
+import {
+    getStorage,
+    ref,
+    uploadBytes,
+    uploadString,
+    getDownloadURL,
+    deleteObject
+} from "https://www.gstatic.com/firebasejs/11.10.0/firebase-storage.js";
+
+/*
+    Firebase-konfigurationen är bevarad oförändrad.
+*/
 const firebaseConfig = {
     apiKey: "AIzaSyDeKIZcW1Mvi4lYvaKRMOWdKk3ikFXwEAU",
     authDomain: "huah-198fc.firebaseapp.com",
@@ -343,11 +936,15 @@ const firebaseConfig = {
 };
 
 const PASSWORD = "A2026";
+
 const appFirebase = initializeApp(firebaseConfig);
 const db = getFirestore(appFirebase);
 const storage = getStorage(appFirebase);
 
 let allTasks = [];
+let appStarted = false;
+let currentEditingTask = null;
+let removeExistingImageFlag = false;
 
 const loginScreen = document.getElementById("loginScreen");
 const app = document.getElementById("app");
@@ -364,7 +961,6 @@ const createTaskBtn = document.getElementById("createTaskBtn");
 const createStatus = document.getElementById("createStatus");
 const taskList = document.getElementById("taskList");
 
-// Elementer til Modal
 const editModal = document.getElementById("editModal");
 const editTaskName = document.getElementById("editTaskName");
 const editTaskDescription = document.getElementById("editTaskDescription");
@@ -377,24 +973,37 @@ const saveEditBtn = document.getElementById("saveEditBtn");
 const cancelEditBtn = document.getElementById("cancelEditBtn");
 const editStatus = document.getElementById("editStatus");
 
-let currentEditingTask = null;
-let removeExistingImageFlag = false;
-
 function checkLogin() {
     if (sessionStorage.getItem("fixday_access") === "ok") {
         loginScreen.classList.add("hidden");
         app.classList.remove("hidden");
         startApp();
+    } else {
+        window.setTimeout(() => passwordInput.focus(), 100);
     }
 }
 
 loginBtn.addEventListener("click", login);
-passwordInput.addEventListener("keydown", function(event) { if (event.key === "Enter") login(); });
-logoutBtn.addEventListener("click", function() { sessionStorage.removeItem("fixday_access"); location.reload(); });
+
+passwordInput.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        login();
+    }
+});
+
+passwordInput.addEventListener("input", function () {
+    loginError.style.display = "none";
+});
+
+logoutBtn.addEventListener("click", function () {
+    sessionStorage.removeItem("fixday_access");
+    location.reload();
+});
 
 function login() {
     if (passwordInput.value.trim() === PASSWORD) {
         sessionStorage.setItem("fixday_access", "ok");
+        loginError.style.display = "none";
         loginScreen.classList.add("hidden");
         app.classList.remove("hidden");
         startApp();
@@ -405,68 +1014,137 @@ function login() {
     }
 }
 
-let appStarted = false;
 function startApp() {
-    if (appStarted) return;
+    if (appStarted) {
+        return;
+    }
+
     appStarted = true;
     createTaskBtn.addEventListener("click", createTask);
 
-    onSnapshot(collection(db, "tasks"), 
+    onSnapshot(
+        collection(db, "tasks"),
         (snapshot) => {
-            allTasks = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            allTasks.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+            allTasks = snapshot.docs.map((taskDocument) => ({
+                id: taskDocument.id,
+                ...taskDocument.data()
+            }));
+
+            allTasks.sort(
+                (a, b) =>
+                    (b.createdAt?.seconds || 0) -
+                    (a.createdAt?.seconds || 0)
+            );
+
             renderTasks();
         },
         (error) => {
             console.error(error);
-            taskList.innerHTML = `<div class="empty">Kunne ikke hente opgaver. Tjek rettigheder.</div>`;
+
+            taskList.innerHTML = `
+                <div class="empty">
+                    Det gick inte att hämta uppgifterna.
+                    Kontrollera behörigheterna.
+                </div>
+            `;
         }
     );
 }
 
-// DEN SKUDSIKRE KOMPRIMERINGS-FUNKTION
+/*
+    Komprimerar vanliga bildformat före uppladdning.
+    AVIF, HEIC och HEIF laddas upp i originalformat om
+    webbläsaren inte kan behandla dem via canvas.
+*/
 function compressImage(file, maxWidth = 1000, quality = 0.7) {
     return new Promise((resolve, reject) => {
-        const problemFormats = ['image/avif', 'image/heic', 'image/heif'];
+        const problemFormats = [
+            "image/avif",
+            "image/heic",
+            "image/heif"
+        ];
+
         if (problemFormats.includes(file.type.toLowerCase())) {
-            return reject(new Error("Drilsk filformat, springer komprimering over."));
+            reject(
+                new Error(
+                    "Bildformatet komprimeras inte och laddas upp i originalformat."
+                )
+            );
+            return;
         }
 
-        const timeout = setTimeout(() => reject(new Error("Timeout")), 8000);
+        const timeout = setTimeout(() => {
+            reject(new Error("Tidsgränsen för bildbehandlingen överskreds."));
+        }, 8000);
+
         const reader = new FileReader();
-        
+
         reader.onload = (event) => {
-            const img = new Image();
-            img.onload = () => {
+            const image = new Image();
+
+            image.onload = () => {
                 clearTimeout(timeout);
-                let width = img.width, height = img.height;
+
+                let width = image.width;
+                let height = image.height;
+
                 if (width > maxWidth) {
                     height = Math.round((height * maxWidth) / width);
                     width = maxWidth;
                 }
-                const canvas = document.createElement('canvas');
-                canvas.width = width; canvas.height = height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, width, height);
-                resolve(canvas.toDataURL('image/jpeg', quality));
+
+                const canvas = document.createElement("canvas");
+                canvas.width = width;
+                canvas.height = height;
+
+                const context = canvas.getContext("2d");
+
+                if (!context) {
+                    reject(new Error("Det gick inte att skapa bildytan."));
+                    return;
+                }
+
+                context.drawImage(image, 0, 0, width, height);
+
+                resolve(
+                    canvas.toDataURL("image/jpeg", quality)
+                );
             };
-            img.onerror = () => { clearTimeout(timeout); reject(new Error("Kan ikke tegne billede.")); };
-            img.src = event.target.result;
+
+            image.onerror = () => {
+                clearTimeout(timeout);
+                reject(new Error("Det gick inte att behandla bilden."));
+            };
+
+            image.src = event.target.result;
         };
-        reader.onerror = () => { clearTimeout(timeout); reject(new Error("Læsefejl.")); };
+
+        reader.onerror = () => {
+            clearTimeout(timeout);
+            reject(new Error("Det gick inte att läsa bildfilen."));
+        };
+
         reader.readAsDataURL(file);
     });
 }
 
-// OPRET OPGAVE
 async function createTask() {
     const name = taskName.value.trim();
     const description = taskDescription.value.trim();
-    const max = parseInt(taskMax.value) || 1;
+    const max = parseInt(taskMax.value, 10) || 1;
     const file = taskImage.files[0];
 
-    if (!name) { alert("Skriv et opgavenavn"); return; }
-    if (max < 1) { alert("Max antal personer skal være mindst 1"); return; }
+    if (!name) {
+        alert("Ange ett namn på uppgiften.");
+        taskName.focus();
+        return;
+    }
+
+    if (max < 1) {
+        alert("Max antal personer måste vara minst 1.");
+        taskMax.focus();
+        return;
+    }
 
     createTaskBtn.disabled = true;
     createStatus.style.color = "#cbd5e1";
@@ -476,25 +1154,45 @@ async function createTask() {
         let imagePath = "";
 
         if (file) {
-            const ext = file.name.split('.').pop() || "jpg";
-            imagePath = `task-images/task_${Date.now()}.${ext}`;
+            const extension = file.name.split(".").pop() || "jpg";
+
+            imagePath = `task-images/task_${Date.now()}.${extension}`;
+
             const imageRef = ref(storage, imagePath);
 
-            createStatus.textContent = "Behandler billede...";
+            createStatus.textContent = "Behandlar bilden...";
 
             try {
-                const compressedBase64 = await compressImage(file, 1000, 0.75);
-                createStatus.textContent = "Uploader komprimeret billede (hurtigt)...";
-                await uploadString(imageRef, compressedBase64, 'data_url');
-            } catch (err) {
-                createStatus.textContent = "Uploader original fil (tager lidt længere)...";
+                const compressedBase64 = await compressImage(
+                    file,
+                    1000,
+                    0.75
+                );
+
+                createStatus.textContent =
+                    "Laddar upp komprimerad bild...";
+
+                await uploadString(
+                    imageRef,
+                    compressedBase64,
+                    "data_url"
+                );
+            } catch (compressionError) {
+                console.warn(
+                    "Bilden kunde inte komprimeras. Originalfilen laddas upp.",
+                    compressionError
+                );
+
+                createStatus.textContent =
+                    "Laddar upp originalbilden...";
+
                 await uploadBytes(imageRef, file);
             }
 
             imageUrl = await getDownloadURL(imageRef);
         }
 
-        createStatus.textContent = "Gemmer opgave...";
+        createStatus.textContent = "Sparar uppgiften...";
 
         await addDoc(collection(db, "tasks"), {
             name: name,
@@ -506,248 +1204,635 @@ async function createTask() {
             createdAt: serverTimestamp()
         });
 
-        taskName.value = ""; taskDescription.value = ""; taskMax.value = "1"; taskImage.value = "";
-        createStatus.style.color = "#4ade80"; // Grøn
-        createStatus.textContent = "Opgaven er oprettet ✅";
-        setTimeout(() => createStatus.textContent = "", 3000);
+        taskName.value = "";
+        taskDescription.value = "";
+        taskMax.value = "1";
+        taskImage.value = "";
 
+        createStatus.style.color = "#4ade80";
+        createStatus.textContent = "Uppgiften har skapats ✅";
+
+        setTimeout(() => {
+            createStatus.textContent = "";
+        }, 3000);
     } catch (error) {
-        console.error("Fejl:", error);
-        createStatus.style.color = "#fca5a5"; // Rød
-        createStatus.textContent = "Fejl ved oprettelse! Prøv igen.";
-    }
+        console.error("Fel:", error);
 
-    createTaskBtn.disabled = false;
+        createStatus.style.color = "#fca5a5";
+        createStatus.textContent =
+            "Det gick inte att skapa uppgiften. Försök igen.";
+    } finally {
+        createTaskBtn.disabled = false;
+    }
 }
 
 function renderTasks() {
     let totalParticipants = 0;
-    allTasks.forEach(task => totalParticipants += Array.isArray(task.people) ? task.people.length : 0);
-    document.getElementById("taskCount").textContent = allTasks.length;
-    document.getElementById("participantCount").textContent = totalParticipants;
+
+    allTasks.forEach((task) => {
+        totalParticipants += Array.isArray(task.people)
+            ? task.people.length
+            : 0;
+    });
+
+    document.getElementById("taskCount").textContent =
+        allTasks.length;
+
+    document.getElementById("participantCount").textContent =
+        totalParticipants;
 
     if (allTasks.length === 0) {
-        taskList.innerHTML = `<div class="empty">Ingen opgaver endnu.<br>Opret den første opgave ovenfor.</div>`;
+        taskList.innerHTML = `
+            <div class="empty">
+                Inga uppgifter ännu.<br>
+                Skapa den första uppgiften ovan.
+            </div>
+        `;
+
         return;
     }
 
-    taskList.innerHTML = allTasks.map(task => {
-        const people = Array.isArray(task.people) ? task.people : [];
-        const max = task.max || 1;
-        const percent = Math.min(100, Math.round((people.length / max) * 100));
-        const isFull = people.length >= max;
-        const imageHtml = task.imageUrl ? `<img src="${escapeHtml(task.imageUrl)}" class="card-img" alt="Opgavebillede">` : `<div class="no-img">📷</div>`;
+    taskList.innerHTML = allTasks.map((task) => {
+        const people = Array.isArray(task.people)
+            ? task.people
+            : [];
 
-        const peopleHtml = people.length ? people.map((person, index) => {
-            const done = person.done === true;
-            return `
-                <div class="person">
-                    <span class="person-name">${done ? "✅" : "⏳"} ${escapeHtml(person.name)}</span>
-                    <span><span class="badge ${done ? "done" : "waiting"}">${done ? "Udført" : "I gang"}</span></span>
-                </div>
-                <div class="actions">
-                    ${!done ? `<button data-action="done" data-task-id="${task.id}" data-person-index="${index}" class="success">Markér udført</button>` : ""}
-                    <button data-action="remove-person" data-task-id="${task.id}" data-person-index="${index}" class="danger">Fjern person</button>
+        const max = task.max || 1;
+
+        const percent = Math.min(
+            100,
+            Math.round((people.length / max) * 100)
+        );
+
+        const isFull = people.length >= max;
+
+        const taskId = escapeHtml(task.id);
+
+        const imageHtml = task.imageUrl
+            ? `
+                ${escapeHtml(task.imageUrl)}
+            `
+            : `
+                <div class="no-img" aria-label="Ingen bild">
+                    📷
                 </div>
             `;
-        }).join("") : `<p style="color:#94a3b8;margin-top:10px;">Ingen tilmeldte endnu</p>`;
+
+        const peopleHtml = people.length
+            ? people.map((person, index) => {
+                const done = person.done === true;
+
+                return `
+                    <div class="person">
+                        <span class="person-name">
+                            ${done ? "✅" : "⏳"}
+                            ${escapeHtml(person.name)}
+                        </span>
+
+                        <span
+                            class="badge ${done ? "done" : "waiting"}"
+                        >
+                            ${done ? "Slutförd" : "Pågår"}
+                        </span>
+                    </div>
+
+                    <div class="actions person-actions">
+                        ${
+                            !done
+                                ? `
+                                    done
+                                        Markera som klar
+                                    </button>
+                                `
+                                : ""
+                        }
+
+                        remove-person
+                            Ta bort person
+                        </button>
+                    </div>
+                `;
+            }).join("")
+            : `
+                <p style="color:#94a3b8;margin-top:10px;">
+                    Inga deltagare ännu
+                </p>
+            `;
 
         return `
-            <div class="card ${isFull ? "full" : ""}">
+            <article class="card ${isFull ? "full" : ""}">
                 ${imageHtml}
+
                 <div class="content">
-                    <h3 class="task-title">${escapeHtml(task.name)}</h3>
-                    <p class="description">${escapeHtml(task.description || "")}</p>
-                    <div class="progress-row"><span>Deltagere</span><strong>${people.length}/${max}</strong></div>
-                    <div class="progress"><div class="progress-fill" style="width:${percent}%"></div></div>
-                    <div class="people">${peopleHtml}</div>
+                    <h3 class="task-title">
+                        ${escapeHtml(task.name)}
+                    </h3>
+
+                    <p class="description">
+                        ${escapeHtml(task.description || "")}
+                    </p>
+
+                    <div class="progress-row">
+                        <span>Deltagare</span>
+                        <strong>${people.length}/${max}</strong>
+                    </div>
+
+                    <div
+                        class="progress"
+                        role="progressbar"
+                        aria-label="Antal deltagare"
+                        aria-valuemin="0"
+                        aria-valuemax="${max}"
+                        aria-valuenow="${people.length}"
+                    >
+                        <div
+                            class="progress-fill"
+                            style="width:${percent}%"
+                        ></div>
+                    </div>
+
+                    <div class="people">
+                        ${peopleHtml}
+                    </div>
+
                     <div class="actions">
-                        <button data-action="join" data-task-id="${task.id}" class="success" ${isFull ? "disabled" : ""}>${isFull ? "Opgaven er fuld" : "Jeg kommer"}</button>
-                        <button data-action="edit" data-task-id="${task.id}" class="secondary">Rediger</button>
-                        <button data-action="delete" data-task-id="${task.id}" class="danger">Slet</button>
+                        join
+                            ${isFull ? "Uppgiften är full" : "Jag kommer"}
+                        </button>
+
+                        edit
+                            Redigera
+                        </button>
+
+                        delete
+                            Radera
+                        </button>
                     </div>
                 </div>
-            </div>
+            </article>
         `;
     }).join("");
 }
 
-taskList.addEventListener("click", async function(event) {
+taskList.addEventListener("click", async function (event) {
     const button = event.target.closest("button");
-    if (!button) return;
-    const { action, taskId, personIndex } = button.dataset;
-    if (!action || !taskId) return;
 
-    if (action === "join") await joinTask(taskId);
-    if (action === "edit") openEditModal(taskId); // Åbner nu den nye modal
-    if (action === "delete") await deleteTask(taskId);
-    if (action === "done") await completePerson(taskId, parseInt(personIndex));
-    if (action === "remove-person") await removePerson(taskId, parseInt(personIndex));
+    if (!button) {
+        return;
+    }
+
+    const {
+        action,
+        taskId,
+        personIndex
+    } = button.dataset;
+
+    if (!action || !taskId) {
+        return;
+    }
+
+    if (action === "join") {
+        await joinTask(taskId);
+    }
+
+    if (action === "edit") {
+        openEditModal(taskId);
+    }
+
+    if (action === "delete") {
+        await deleteTask(taskId);
+    }
+
+    if (action === "done") {
+        await completePerson(
+            taskId,
+            parseInt(personIndex, 10)
+        );
+    }
+
+    if (action === "remove-person") {
+        await removePerson(
+            taskId,
+            parseInt(personIndex, 10)
+        );
+    }
 });
 
-// --- DEN NYE REDIGERINGS LOGIK ---
 function openEditModal(taskId) {
-    currentEditingTask = allTasks.find(item => item.id === taskId);
-    if (!currentEditingTask) return;
+    currentEditingTask = allTasks.find(
+        (item) => item.id === taskId
+    );
 
-    // Udfyld formular med eksisterende data
+    if (!currentEditingTask) {
+        return;
+    }
+
     editTaskName.value = currentEditingTask.name || "";
-    editTaskDescription.value = currentEditingTask.description || "";
+    editTaskDescription.value =
+        currentEditingTask.description || "";
+
     editTaskMax.value = currentEditingTask.max || 1;
-    editTaskImage.value = ""; // Nulstil fil-input
+    editTaskImage.value = "";
     editStatus.textContent = "";
     removeExistingImageFlag = false;
 
-    // Håndter billede preview
     if (currentEditingTask.imageUrl) {
-        editTaskImagePreview.src = currentEditingTask.imageUrl;
+        editTaskImagePreview.src =
+            currentEditingTask.imageUrl;
+
         currentImageBox.style.display = "block";
     } else {
+        editTaskImagePreview.src = "";
         currentImageBox.style.display = "none";
     }
 
     editModal.classList.remove("hidden");
+    document.body.style.overflow = "hidden";
+
+    window.setTimeout(() => {
+        editTaskName.focus();
+    }, 100);
 }
 
-cancelEditBtn.addEventListener("click", () => {
+function closeEditModal() {
     editModal.classList.add("hidden");
+    document.body.style.overflow = "";
+
     currentEditingTask = null;
+    removeExistingImageFlag = false;
+    editTaskImage.value = "";
+    editStatus.textContent = "";
+}
+
+cancelEditBtn.addEventListener("click", closeEditModal);
+
+editModal.addEventListener("click", function (event) {
+    if (
+        event.target === editModal &&
+        !saveEditBtn.disabled
+    ) {
+        closeEditModal();
+    }
 });
 
-// Når man trykker "Slet nuværende billede" i modalen
+document.addEventListener("keydown", function (event) {
+    if (
+        event.key === "Escape" &&
+        !editModal.classList.contains("hidden") &&
+        !saveEditBtn.disabled
+    ) {
+        closeEditModal();
+    }
+});
+
 removeImageBtn.addEventListener("click", () => {
     removeExistingImageFlag = true;
     currentImageBox.style.display = "none";
+
+    editStatus.style.color = "#fde68a";
+    editStatus.textContent =
+        "Bilden tas bort när du sparar ändringarna.";
 });
 
-// Gem ændringer i modalen
 saveEditBtn.addEventListener("click", async () => {
-    if (!currentEditingTask) return;
+    if (!currentEditingTask) {
+        return;
+    }
 
     const newName = editTaskName.value.trim();
-    const newDesc = editTaskDescription.value.trim();
-    const newMax = parseInt(editTaskMax.value) || 1;
+    const newDescription =
+        editTaskDescription.value.trim();
+
+    const newMax =
+        parseInt(editTaskMax.value, 10) || 1;
+
     const file = editTaskImage.files[0];
 
-    if (!newName) { alert("Opgavenavn kan ikke være tomt"); return; }
-    if (newMax < (currentEditingTask.people?.length || 0)) { 
-        alert("Max antal kan ikke være lavere end antallet af tilmeldte."); 
-        return; 
+    if (!newName) {
+        alert("Uppgiftens namn får inte vara tomt.");
+        editTaskName.focus();
+        return;
+    }
+
+    if (
+        newMax <
+        (currentEditingTask.people?.length || 0)
+    ) {
+        alert(
+            "Max antal kan inte vara lägre än antalet anmälda personer."
+        );
+
+        editTaskMax.focus();
+        return;
     }
 
     saveEditBtn.disabled = true;
+    cancelEditBtn.disabled = true;
+
     editStatus.style.color = "#cbd5e1";
-    editStatus.textContent = "Gemmer ændringer...";
+    editStatus.textContent = "Sparar ändringarna...";
 
     try {
-        let updateData = {
+        const updateData = {
             name: newName,
-            description: newDesc,
+            description: newDescription,
             max: newMax
         };
 
-        // 1. Hvis et helt NYT billede er valgt
         if (file) {
-            editStatus.textContent = "Uploader nyt billede...";
-            const ext = file.name.split('.').pop() || "jpg";
-            const newImagePath = `task-images/task_${Date.now()}.${ext}`;
-            const newImageRef = ref(storage, newImagePath);
-            
+            editStatus.textContent =
+                "Laddar upp den nya bilden...";
+
+            const extension =
+                file.name.split(".").pop() || "jpg";
+
+            const newImagePath =
+                `task-images/task_${Date.now()}.${extension}`;
+
+            const newImageRef =
+                ref(storage, newImagePath);
+
             try {
-                const compressedBase64 = await compressImage(file, 1000, 0.75);
-                await uploadString(newImageRef, compressedBase64, 'data_url');
-            } catch (err) {
+                const compressedBase64 =
+                    await compressImage(
+                        file,
+                        1000,
+                        0.75
+                    );
+
+                await uploadString(
+                    newImageRef,
+                    compressedBase64,
+                    "data_url"
+                );
+            } catch (compressionError) {
+                console.warn(
+                    "Bilden kunde inte komprimeras. Originalfilen laddas upp.",
+                    compressionError
+                );
+
                 await uploadBytes(newImageRef, file);
             }
-            
-            updateData.imageUrl = await getDownloadURL(newImageRef);
+
+            updateData.imageUrl =
+                await getDownloadURL(newImageRef);
+
             updateData.imagePath = newImagePath;
 
-            // Slet det gamle billede fra databasen for at spare plads
             if (currentEditingTask.imagePath) {
-                deleteObject(ref(storage, currentEditingTask.imagePath)).catch(e => console.warn(e));
+                deleteObject(
+                    ref(
+                        storage,
+                        currentEditingTask.imagePath
+                    )
+                ).catch((error) => {
+                    console.warn(
+                        "Det gick inte att ta bort den gamla bilden:",
+                        error
+                    );
+                });
             }
-        } 
-        // 2. Hvis brugeren har valgt at slette det gamle uden at uploade et nyt
-        else if (removeExistingImageFlag) {
+        } else if (removeExistingImageFlag) {
             if (currentEditingTask.imagePath) {
-                deleteObject(ref(storage, currentEditingTask.imagePath)).catch(e => console.warn(e));
+                deleteObject(
+                    ref(
+                        storage,
+                        currentEditingTask.imagePath
+                    )
+                ).catch((error) => {
+                    console.warn(
+                        "Det gick inte att ta bort bilden:",
+                        error
+                    );
+                });
             }
+
             updateData.imageUrl = "";
             updateData.imagePath = "";
         }
 
-        // Opdater Firestore
-        await updateDoc(doc(db, "tasks", currentEditingTask.id), updateData);
-        
-        editStatus.style.color = "#4ade80";
-        editStatus.textContent = "Ændringer gemt ✅";
-        
-        setTimeout(() => {
-            editModal.classList.add("hidden");
-            saveEditBtn.disabled = false;
-        }, 1000);
+        await updateDoc(
+            doc(db, "tasks", currentEditingTask.id),
+            updateData
+        );
 
+        editStatus.style.color = "#4ade80";
+        editStatus.textContent = "Ändringarna har sparats ✅";
+
+        setTimeout(() => {
+            closeEditModal();
+        }, 800);
     } catch (error) {
-        console.error("Fejl under redigering:", error);
+        console.error(
+            "Fel vid redigering:",
+            error
+        );
+
         editStatus.style.color = "#fca5a5";
-        editStatus.textContent = "Fejl ved gemning!";
+        editStatus.textContent =
+            "Det gick inte att spara ändringarna.";
+    } finally {
         saveEditBtn.disabled = false;
+        cancelEditBtn.disabled = false;
     }
 });
 
-// SLET OPGAVE - Opdateret så den også sletter billedet fra Storage
 async function deleteTask(taskId) {
-    const task = allTasks.find(item => item.id === taskId);
-    if (!task || !confirm("Vil du slette opgaven: " + task.name + "?")) return;
-    try { 
-        // Ryd op i Storage hvis der er et billede
+    const task = allTasks.find(
+        (item) => item.id === taskId
+    );
+
+    if (
+        !task ||
+        !confirm(
+            `Vill du radera uppgiften "${task.name}"?`
+        )
+    ) {
+        return;
+    }
+
+    try {
         if (task.imagePath) {
-            deleteObject(ref(storage, task.imagePath)).catch(e => console.warn("Billede slettet, eller fandtes ikke:", e));
+            deleteObject(
+                ref(storage, task.imagePath)
+            ).catch((error) => {
+                console.warn(
+                    "Bilden var redan borttagen eller kunde inte tas bort:",
+                    error
+                );
+            });
         }
-        await deleteDoc(doc(db, "tasks", taskId)); 
-    } 
-    catch (e) { console.error(e); }
+
+        await deleteDoc(
+            doc(db, "tasks", taskId)
+        );
+    } catch (error) {
+        console.error(error);
+
+        alert(
+            "Det gick inte att radera uppgiften. Försök igen."
+        );
+    }
 }
 
 async function joinTask(taskId) {
-    const personName = prompt("Skriv dit navn");
-    if (!personName || !personName.trim()) return;
+    const personName = prompt("Ange ditt namn:");
+
+    if (!personName || !personName.trim()) {
+        return;
+    }
+
+    const cleanName = personName.trim();
+
     try {
-        await runTransaction(db, async (transaction) => {
-            const taskRef = doc(db, "tasks", taskId);
-            const taskSnap = await transaction.get(taskRef);
-            if (!taskSnap.exists()) throw new Error("Opgaven findes ikke længere");
-            const task = taskSnap.data();
-            const people = Array.isArray(task.people) ? task.people : [];
-            if (people.some(p => p.name.toLowerCase() === personName.trim().toLowerCase())) throw new Error("Du er allerede tilmeldt");
-            if (people.length >= (task.max || 1)) throw new Error("Opgaven er fuld");
-            people.push({ name: personName.trim(), done: false });
-            transaction.update(taskRef, { people });
-        });
-    } catch (error) { alert(error.message || "Fejl"); }
+        await runTransaction(
+            db,
+            async (transaction) => {
+                const taskRef =
+                    doc(db, "tasks", taskId);
+
+                const taskSnapshot =
+                    await transaction.get(taskRef);
+
+                if (!taskSnapshot.exists()) {
+                    throw new Error(
+                        "Uppgiften finns inte längre."
+                    );
+                }
+
+                const task =
+                    taskSnapshot.data();
+
+                const people =
+                    Array.isArray(task.people)
+                        ? [...task.people]
+                        : [];
+
+                const alreadyRegistered =
+                    people.some((person) =>
+                        String(person.name)
+                            .toLocaleLowerCase("sv-SE") ===
+                        cleanName.toLocaleLowerCase("sv-SE")
+                    );
+
+                if (alreadyRegistered) {
+                    throw new Error(
+                        "Du är redan anmäld."
+                    );
+                }
+
+                if (
+                    people.length >=
+                    (task.max || 1)
+                ) {
+                    throw new Error(
+                        "Uppgiften är full."
+                    );
+                }
+
+                people.push({
+                    name: cleanName,
+                    done: false
+                });
+
+                transaction.update(
+                    taskRef,
+                    { people: people }
+                );
+            }
+        );
+    } catch (error) {
+        alert(
+            error.message ||
+            "Ett fel inträffade."
+        );
+    }
 }
 
 async function completePerson(taskId, personIndex) {
-    const task = allTasks.find(item => item.id === taskId);
-    if (!task || !task.people[personIndex]) return;
-    const people = [...task.people];
-    people[personIndex].done = true;
-    try { await updateDoc(doc(db, "tasks", taskId), { people }); }
-    catch (e) { console.error(e); }
+    const task = allTasks.find(
+        (item) => item.id === taskId
+    );
+
+    if (
+        !task ||
+        !Array.isArray(task.people) ||
+        !task.people[personIndex]
+    ) {
+        return;
+    }
+
+    const people = task.people.map(
+        (person, index) =>
+            index === personIndex
+                ? { ...person, done: true }
+                : { ...person }
+    );
+
+    try {
+        await updateDoc(
+            doc(db, "tasks", taskId),
+            { people: people }
+        );
+    } catch (error) {
+        console.error(error);
+
+        alert(
+            "Det gick inte att markera personen som klar."
+        );
+    }
 }
 
 async function removePerson(taskId, personIndex) {
-    const task = allTasks.find(item => item.id === taskId);
-    if (!task || !task.people[personIndex] || !confirm("Fjern " + task.people[personIndex].name + "?")) return;
-    const people = [...task.people];
+    const task = allTasks.find(
+        (item) => item.id === taskId
+    );
+
+    if (
+        !task ||
+        !Array.isArray(task.people) ||
+        !task.people[personIndex]
+    ) {
+        return;
+    }
+
+    const person = task.people[personIndex];
+
+    if (
+        !confirm(
+            `Vill du ta bort ${person.name}?`
+        )
+    ) {
+        return;
+    }
+
+    const people = task.people.map(
+        (item) => ({ ...item })
+    );
+
     people.splice(personIndex, 1);
-    try { await updateDoc(doc(db, "tasks", taskId), { people }); }
-    catch (e) { console.error(e); }
+
+    try {
+        await updateDoc(
+            doc(db, "tasks", taskId),
+            { people: people }
+        );
+    } catch (error) {
+        console.error(error);
+
+        alert(
+            "Det gick inte att ta bort personen."
+        );
+    }
 }
 
 function escapeHtml(value) {
-    return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#039;");
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
 }
 
 checkLogin();
@@ -755,5 +1840,3 @@ checkLogin();
 
 </body>
 </html>
-
-
