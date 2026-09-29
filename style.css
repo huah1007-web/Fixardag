@@ -1,0 +1,37 @@
+.task-section{
+    grid-column:1/-1;
+    margin-top:10px;
+}
+
+.task-toggle{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#111827;
+    border:1px solid #253047;
+    border-radius:18px;
+    padding:15px 18px;
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.task-toggle .icon{
+    transition:.2s;
+}
+
+.task-toggle[aria-expanded="true"] .icon{
+    transform:rotate(180deg);
+}
+
+.completed-wrapper{
+    display:none;
+    margin-top:14px;
+}
+
+.completed-wrapper.open{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(min(310px,100%),1fr));
+    gap:18px;
+}
